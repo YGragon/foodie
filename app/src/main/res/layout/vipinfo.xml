@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#E3E3E3"
+
+        >
+
+        <TextView
+            android:text="我的VIP"
+            android:id="@+id/mev"
+            android:textSize="20dp"
+            android:gravity="center_vertical"
+            android:textColor="#FFFFFF"
+            android:paddingLeft="10dp"
+            android:background="#3090E6"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_gravity="center_horizontal" />
+        <TextView
+            android:layout_below="@id/mev"
+            android:id="@+id/kait"
+            android:text="开通时长： "
+            android:paddingLeft="10dp"
+            android:textSize="20dp"
+            android:textColor="#3090E6"
+            android:background="#FFFFFF"
+            android:layout_marginTop="10dp"
+            android:layout_width="match_parent"
+            android:gravity="center_vertical"
+            android:layout_height="55dp" />
+        <TextView
+            android:layout_below="@id/kait"
+            android:id="@+id/start"
+            android:text="起始时间： "
+            android:textSize="20dp"
+            android:textColor="#27e60e"
+            android:background="#FFFFFF"
+            android:paddingLeft="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_width="match_parent"
+            android:gravity="center_vertical"
+            android:layout_height="55dp" />
+        <TextView
+            android:layout_below="@id/start"
+            android:id="@+id/end"
+            android:text="到期时间： "
+            android:textSize="20dp"
+            android:textColor="#e63036"
+            android:background="#FFFFFF"
+            android:layout_marginTop="10dp"
+            android:layout_width="match_parent"
+            android:paddingLeft="10dp"
+            android:gravity="center_vertical"
+            android:layout_height="55dp" />
+    </RelativeLayout>
+</LinearLayout>

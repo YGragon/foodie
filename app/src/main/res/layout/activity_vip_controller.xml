@@ -1,0 +1,232 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.edg.foodie.controller.VipControllerActivity">
+
+    <RelativeLayout
+        android:background="#E3E3E3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:id="@+id/vip_tv"
+            android:background="#FFFFFF"
+            android:gravity="center_vertical"
+            android:text="我的会员信息"
+            android:textSize="23dp"
+            android:textColor="#3090E6"
+            android:layout_width="match_parent"
+            android:layout_height="55dp" />
+        <TextView
+            android:text="会员特权"
+            android:textSize="23dp"
+            android:textColor="#3090E6"
+            android:id="@+id/vt_tv"
+            android:layout_marginTop="@dimen/margin_top"
+            android:gravity="center_vertical"
+            android:layout_below="@id/vip_tv"
+            android:background="#FFFFFF"
+            android:layout_width="match_parent"
+            android:layout_height="45dp" />
+        <LinearLayout
+            android:layout_below="@id/vt_tv"
+            android:id="@+id/lil"
+            android:layout_marginTop="@dimen/margintop"
+            android:orientation="horizontal"
+            android:background="#FFFFFF"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <RelativeLayout
+                android:layout_gravity="left"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:layout_marginLeft="20dp"
+                    android:text="免配送费"
+                    android:textSize="20dp"
+                    android:id="@+id/peisong_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+                <TextView
+                    android:layout_marginTop="5dp"
+                    android:layout_marginLeft="20dp"
+                    android:textSize="12dp"
+                    android:layout_below="@id/peisong_tv"
+                    android:text="专送及达"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+            </RelativeLayout>
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:text="优先派送"
+                    android:textSize="20dp"
+                    android:id="@+id/deliver"
+                    android:layout_marginRight="20dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+                <TextView
+                    android:layout_marginTop="5dp"
+                    android:textSize="12dp"
+                    android:layout_marginRight="20dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_below="@id/deliver"
+                    android:text="优先派送美食"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+            </RelativeLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_below="@id/lil"
+            android:id="@+id/lil1"
+            android:layout_marginTop="@dimen/margintop"
+            android:orientation="horizontal"
+            android:background="#FFFFFF"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <RelativeLayout
+                android:layout_gravity="left"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:layout_marginLeft="20dp"
+                    android:text="优先制作"
+                    android:textSize="20dp"
+                    android:id="@+id/zhizuo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+                <TextView
+                    android:layout_marginTop="5dp"
+                    android:layout_marginLeft="20dp"
+                    android:textSize="12dp"
+                    android:layout_below="@id/zhizuo"
+                    android:text="优先制作美食"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+            </RelativeLayout>
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:text="更多特权"
+                    android:textSize="20dp"
+                    android:id="@+id/more_tv"
+                    android:layout_marginRight="20dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+                <TextView
+                    android:layout_marginTop="5dp"
+                    android:textSize="12dp"
+                    android:layout_marginRight="20dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_below="@id/more_tv"
+                    android:text="敬请期待"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+            </RelativeLayout>
+        </LinearLayout>
+
+        <TextView
+            android:text="开通会员"
+            android:textSize="23dp"
+            android:textColor="#3091e6"
+            android:id="@+id/buyv_tv"
+            android:layout_below="@id/lil1"
+            android:layout_marginTop="@dimen/margin_top"
+            android:background="#FFFFFF"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+        <RelativeLayout
+            android:layout_below="@id/buyv_tv"
+            android:layout_marginTop="5dp"
+            android:id="@+id/viprl1"
+            android:background="#FFFFFF"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:layout_marginTop="5pt"
+                android:text="1个月  ￥19.8"
+                android:textSize="20dp"
+                android:id="@+id/tv1"
+                android:gravity="center_vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <Button
+                    android:layout_alignParentRight="true"
+                    android:text="开通"
+                    android:id="@+id/btn1"
+                    android:textColor="#FF0033"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+            </RelativeLayout>
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_below="@id/viprl1"
+            android:layout_marginTop="@dimen/margintop"
+            android:id="@+id/viprl2"
+            android:background="#FFFFFF"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:layout_marginTop="5pt"
+                android:text="半年    ￥30"
+                android:textSize="20dp"
+                android:id="@+id/tv2"
+                android:gravity="center_vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <Button
+                    android:layout_alignParentRight="true"
+                    android:text="开通"
+                    android:id="@+id/btn2"
+                    android:textColor="#FF0033"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+            </RelativeLayout>
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_below="@id/viprl2"
+            android:layout_marginTop="@dimen/margintop"
+            android:background="#FFFFFF"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:layout_marginTop="5pt"
+                android:text="1年      ￥60"
+                android:id="@+id/tv3"
+                android:textSize="20dp"
+                android:gravity="center_vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <Button
+                    android:layout_alignParentRight="true"
+                    android:text="开通"
+                    android:id="@+id/btn3"
+                    android:textColor="#FF0033"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+            </RelativeLayout>
+
+        </RelativeLayout>
+
+    </RelativeLayout>
+
+</RelativeLayout>

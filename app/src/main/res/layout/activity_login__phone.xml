@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.edg.foodie.activity.Login_PhoneActivity">
+
+    <RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/colorPrimary">
+    <Button
+    android:id="@+id/btn_login"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_alignParentLeft="true"
+    android:text="返回密码登陆"
+    android:textSize="20sp"
+    android:layout_margin="5dip"
+    android:textColor="@color/text_white"
+    android:background="@color/colorPrimary"/>
+    </RelativeLayout>
+
+    <TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginTop="70dp"
+    android:stretchColumns="1">
+    <TableRow>
+    <TextView
+    android:layout_height="wrap_content"
+    android:text="手机号："
+    android:textSize="20sp"
+    />
+    <EditText
+    android:id="@+id/account"
+    android:layout_height="wrap_content"
+    android:layout_span="2" />
+    <Button
+    android:text="获取验证码"
+    android:layout_margin="5dip"
+    android:textSize="20sp"
+    android:textColor="@color/text_yellow"
+    />
+    </TableRow>
+    <TableRow>
+    <TextView
+    android:layout_height="wrap_content"
+    android:text="验证码："
+    android:textSize="20sp"/>
+    <EditText
+    android:id="@+id/password"
+    android:layout_height="wrap_content"
+    android:layout_span="2"/>
+    </TableRow>
+    <TableRow>
+    <Button
+    android:id="@+id/login"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:layout_span="4"
+    android:layout_marginTop="30dp"
+    android:textSize="25sp"
+    android:background="@color/colorPrimary"
+    android:textColor="@android:color/white"
+    android:gravity="center"
+    android:text="登录" />
+    </TableRow>
+    <TextView
+    android:id="@+id/text_view"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:text="温馨提示：未注册吃货宝账户的用户登陆时将自动进入登录页面且代表您已同意《用户服务协议》"/>
+    </TableLayout>
+
+</RelativeLayout>

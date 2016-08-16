@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
+
+
+    <ImageView
+    android:id="@+id/order_image"
+    android:layout_width="150dp"
+    android:layout_height="150dp"
+    android:src="@mipmap/xlzb"
+    />
+    <TextView
+        android:layout_below="@+id/order_image"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/order_name"
+        />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/order_instruction"
+        android:layout_margin="25dp"
+        android:maxLines="3"
+        android:ellipsize="end"
+        android:layout_toRightOf="@+id/order_image"
+        android:textSize="15dp"
+        android:text="我爱我家"
+        />
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/btn_increase"
+        android:layout_toRightOf="@+id/order_instruction"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="50dp"
+        android:text="+"
+        />
+</RelativeLayout>

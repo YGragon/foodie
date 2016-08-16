@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    tools:context="com.edg.foodie.activity.Searchctivity">
+
+    <RelativeLayout
+        android:id="@+id/rl_search"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white_alpha_percent_45"
+        android:padding="5dp"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:id="@+id/ll_search_top"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <EditText
+                android:id="@+id/et_input"
+                android:layout_width="match_parent"
+                android:hint="请输入搜索内容"
+                android:layout_height="50dp"
+                android:layout_weight="100"
+            />
+
+            <ImageView
+                android:id="@+id/iv_search"
+                android:layout_width="50dp"
+                android:layout_height="45dp"
+                android:layout_weight="1"
+                android:src="@drawable/icon_explore_finduser"/>
+
+            <ImageView
+                android:id="@+id/iv_scan"
+                android:layout_width="50dp"
+                android:layout_height="45dp"
+                android:layout_weight="1"
+                android:src="@drawable/icon_explore_scan"/>
+        </LinearLayout>
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/search_history_ll"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_below="@id/rl_search"
+        android:layout_height="wrap_content"
+        android:visibility="gone">
+        <TextView
+            android:id="@+id/contentTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="12sp"
+            android:text="历史搜索"
+            android:paddingTop="4dp"
+            android:paddingBottom="4dp"
+            android:paddingLeft="10dp"
+            android:textColor="@color/text_gray2"/>
+        <ListView
+            android:id="@+id/search_history_lv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:dividerHeight="0.5dp"
+            style="@style/common_list"
+            android:divider="@color/default_line_color"
+            android:listSelector="@drawable/list_item_selector">
+        </ListView>
+        <Button
+            android:id="@+id/clear_history_btn"
+            android:layout_width="210dp"
+            android:layout_height="38dp"
+            android:layout_marginTop="5dp"
+            android:layout_gravity="center"
+            android:textSize="14sp"
+            android:text="清除历史搜索记录"
+            android:background="@drawable/round_btn_selector"/>
+    </LinearLayout>
+
+</RelativeLayout>
