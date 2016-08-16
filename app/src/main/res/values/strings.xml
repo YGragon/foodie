@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Foodie</string>
+    <string name="app_name">吃货宝</string>
     <string name="home">外卖</string>
     <string name="action_search">搜索</string>
     <string name="open_drawer">抽屉打开了</string>

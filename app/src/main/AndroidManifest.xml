@@ -67,7 +67,6 @@
         <activity android:name=".activity.RegistActivity" />
         <activity android:name=".activity.AboutUSActivity" />
         <activity android:name=".fragment.MapFragment" />
-        <activity android:name=".fragment.HomeFragment" />
 
         <meta-data
             android:name="com.amap.api.v2.apikey"
