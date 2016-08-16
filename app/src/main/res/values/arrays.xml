@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <string-array name="size">
+<resources
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:ignore="MissingTranslation"
+    >
+    <string-array name="font_size">
         <item>10</item>
         <item>12</item>
         <item>14</item>
