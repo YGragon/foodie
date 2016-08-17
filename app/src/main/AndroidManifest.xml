@@ -108,9 +108,9 @@
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden|adjustResize" >
-
+            <!-- QQ和QQ空间分享 QQ登录的回调必须要配置的 -->
             <intent-filter>
-                <data android:scheme="tencent100371282" />
+                <data android:scheme="tencent1105547229" />
                 <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.BROWSABLE" />
                 <category android:name="android.intent.category.DEFAULT" />

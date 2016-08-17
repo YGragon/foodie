@@ -21,11 +21,11 @@ public class MusicActivity extends AppCompatActivity {
 
         mpv = (MusicPlayerView) findViewById(R.id.mpv);
 
-//        mpv.setButtonColor(Color.DKGRAY);
-//        mpv.setCoverDrawable(R.drawable.mycover);
-//        mpv.setProgressEmptyColor(Color.GRAY);
-//        mpv.setProgressLoadedColor(Color.BLUE);
-//        mpv.setTimeColor(Color.WHITE);
+        mpv.setButtonColor(Color.DKGRAY);
+        mpv.setCoverDrawable(R.drawable.mycover);
+        mpv.setProgressEmptyColor(Color.GRAY);
+        mpv.setProgressLoadedColor(Color.BLUE);
+        mpv.setTimeColor(Color.WHITE);
 
         mpv.setCoverURL("https://upload.wikimedia.org/wikipedia/en/b/b3/MichaelsNumberOnes.JPG");
 

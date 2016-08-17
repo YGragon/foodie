@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:background="#f5fffa"
     tools:context="com.edg.foodie.activity.SettingActivity">
@@ -12,11 +13,14 @@
         android:background="@color/colorPrimary"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-        <Button
+        <TextView
             android:layout_width="wrap_content"
             android:textSize="20dp"
+            android:padding="10dp"
+            android:layout_marginTop="5dp"
             android:background="@color/colorPrimary"
             android:textColor="#ffffff"
+            android:clickable="true"
             android:layout_height="wrap_content"
             android:text="@string/reback"
             android:id="@+id/setbackbtn"
@@ -27,104 +31,52 @@
             android:text="@string/setting"
             android:textSize="20dp"
             android:textColor="#ffffff"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="5dp"
+            android:padding="10dp"
             android:layout_toRightOf="@id/setbackbtn"
             android:gravity="center"
             />
     </RelativeLayout>
 
     <LinearLayout
-        android:paddingTop="10dp"
-        android:id="@+id/font"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/settitle"
-        android:layout_marginTop="10dp"
-        >
-        <TextView
-            android:layout_width="110dp"
-            android:layout_height="wrap_content"
-            android:text="@string/font"
-            android:textSize="20dp"
-            />
-        <Spinner
-            android:layout_marginLeft="50dp"
-            android:id="@+id/fontsize"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:entries="@array/font_size"
-            >
-        </Spinner>
-    </LinearLayout>
-
-    <LinearLayout
-        android:paddingTop="10dp"
         android:id="@+id/update"
+        android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/font"
+        android:layout_marginTop="20dp"
+        android:layout_below="@id/settitle"
         >
-        <TextView
-            android:layout_width="110dp"
-            android:layout_height="wrap_content"
-            android:text="@string/update"
-            android:textSize="20dp"
-            />
-        <ToggleButton
-            android:layout_marginLeft="50dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:layout_gravity="center_horizontal"
-            android:background="#f5fffa"
+        <me.xiaopan.switchbutton.SwitchButton
+            style="@style/item"
+            android:id="@+id/switch_update"
+            android:text="自动更新"
+            android:textSize="18sp"
             android:checked="true"
-            android:textSize="20dp"
-            android:textColor="#4F94CD"
-            android:textOff="Off"
-            android:textOn="On"
-            />
-    </LinearLayout>
+            android:background="@drawable/selector_preference_single"
+            app:withTextInterval="16dp"
+            app:frameDrawable="@drawable/switch_frame"
+            app:stateDrawable="@drawable/selector_switch_state"
+            app:stateMaskDrawable="@drawable/switch_state_mask"
+            app:sliderDrawable="@drawable/selector_switch_slider"/>
+        <me.xiaopan.switchbutton.SwitchButton
+            style="@style/item"
+            android:id="@+id/switch_clean"
+            android:text="清理缓存"
+            android:textSize="18sp"
+            android:layout_marginTop="20dp"
+            android:checked="true"
+            android:background="@drawable/selector_preference_single"
+            app:withTextInterval="16dp"
+            app:frameDrawable="@drawable/switch_frame"
+            app:stateDrawable="@drawable/selector_switch_state"
+            app:stateMaskDrawable="@drawable/switch_state_mask"
+            app:sliderDrawable="@drawable/selector_switch_slider"/>
 
-    <LinearLayout
-        android:paddingTop="10dp"
-        android:id="@+id/cache"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/update"
-        >
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/cache"
-            android:textSize="20dp"
-            android:layout_weight="1"
-            />
-        <TextView
-            android:id="@+id/cachesize"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="0.0MB"
-            android:gravity="end"
-            android:textSize="20dp"
-
-            />
-        <Button
-            android:id="@+id/cleancache"
-            android:layout_marginRight="10dp"
-            android:background="#f5fffa"
-            android:layout_weight="1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="清理"
-            android:textSize="17dp"
-            android:textColor="#4F94CD"
-            />
     </LinearLayout>
 
     <View
-        android:layout_below="@id/cache"
+        android:id="@+id/view1"
+        android:layout_below="@id/update"
         android:layout_marginTop="20dp"
         android:layout_width="match_parent"
         android:layout_height="1dp"
@@ -133,20 +85,19 @@
 
 
     <RelativeLayout
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="20dp"
         android:id="@+id/advice"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/cache">
-        <Button
-            android:id="@+id/advicebtn"
-            android:background="#f5fffa"
-            android:layout_width="200dp"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
+        android:layout_below="@id/view1">
+        <TextView
+            style="@style/item"
+            android:id="@+id/tv_advice"
+            android:background="@drawable/preference_single_normal"
             android:text="@string/advice"
-            android:textColor="#4F94CD"
-            android:textSize="20dp"
+            android:textSize="18dp"
+            android:paddingTop="15dp"
+            android:clickable="true"
             />
     </RelativeLayout>
 
@@ -157,20 +108,19 @@
         android:layout_below="@id/advice"
         android:layout_marginTop="20dp"
         >
-        <Button
-            android:id="@+id/aboutbtn"
-            android:layout_width="200dp"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
+        <TextView
+            style="@style/item"
+            android:id="@+id/tv_about"
+            android:background="@drawable/preference_single_normal"
             android:text="@string/about"
-            android:textSize="20dp"
-            android:background="#f5fffa"
-            android:textColor="#4F94CD"
+            android:textSize="18dp"
+            android:paddingTop="15dp"
+            android:clickable="true"
             />
-
     </RelativeLayout>
 
     <View
+        android:id="@+id/view2"
         android:layout_below="@id/about"
         android:layout_marginTop="20dp"
         android:layout_width="match_parent"
@@ -179,39 +129,21 @@
         />
 
     <RelativeLayout
-        android:id="@+id/restset"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/about"
-        android:layout_marginTop="30dp"
-        >
-        <Button
-            android:id="@+id/restsetbtn"
-            android:layout_width="200dp"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:text="@string/restset"
-            android:background="#f5fffa"
-            android:textSize="20dp"
-            android:textColor="#4F94CD"
-            />
-    </RelativeLayout>
-
-    <RelativeLayout
         android:id="@+id/exit"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/restset"
+        android:layout_below="@id/view2"
+        android:layout_marginTop="20dp"
         >
-        <Button
-            android:id="@+id/exitbtn"
-            android:layout_width="200dp"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
+        <TextView
+            style="@style/item"
+            android:id="@+id/tv_exit"
+            android:background="@drawable/preference_single_normal"
             android:text="@string/exit"
-            android:textSize="20dp"
-            android:background="#f5fffa"
+            android:textSize="18dp"
             android:textColor="#ff0000"
+            android:paddingTop="15dp"
+            android:clickable="true"
             />
     </RelativeLayout>
 </RelativeLayout>
