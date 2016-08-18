@@ -6,12 +6,9 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.SystemClock;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.ViewTreeObserver;
-import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.Button;
@@ -98,7 +95,7 @@ public class HomeFragment extends Fragment {
                 String count = foodBundle.getCount();
                 String image = foodBundle.getImg();
 
-                Intent intent = new Intent(getActivity(), ShowOrderActivity.class);
+                Intent intent = new Intent(UIUtils.getContext(), ShowOrderActivity.class);
                 Bundle bundle = new Bundle();
                 bundle.putString("name", name);
                 bundle.putString("count", count);
@@ -106,7 +103,6 @@ public class HomeFragment extends Fragment {
 
                 intent.putExtras(bundle);
                 startActivity(intent);
-
             }
         });
         lv_food_list.setOnRefreshListener(new RefreshListVIew.OnRefreshListener() {
@@ -149,7 +145,7 @@ public class HomeFragment extends Fragment {
         return view;
     }
 
-
+    //从服务器请求数据
     private void requestDataFromServer(final boolean b) {
         new Thread(){
             public void run() {

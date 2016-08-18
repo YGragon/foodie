@@ -2,12 +2,11 @@ package com.dongxi.foodie.activity;
 
 import android.app.FragmentTransaction;
 import android.content.Intent;
-import android.graphics.Color;
+import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarActivity;
-import android.os.Bundle;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
 import android.view.KeyEvent;
@@ -23,11 +22,12 @@ import com.dongxi.foodie.R;
 import com.dongxi.foodie.fragment.FindFragment;
 import com.dongxi.foodie.fragment.HomeFragment;
 import com.dongxi.foodie.fragment.OrderFragment;
+import com.dongxi.foodie.utils.PrefUtils;
 import com.jaeger.library.StatusBarUtil;
 
 import cn.sharesdk.framework.ShareSDK;
 import cn.sharesdk.onekeyshare.OnekeyShare;
-
+//ActionBarActivity com.zhy.changeskin.base.BaseSkinActivity
 public class MainActivity extends ActionBarActivity implements View.OnClickListener,NavigationView.OnNavigationItemSelectedListener{
 
     private TextView txt_waimai;
@@ -48,6 +48,18 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+        //sputils是對SharedPreferences的封裝，代碼就不上了，大家理解意思就行了
+        if(PrefUtils.get(this,"theme","dayTheme").equals("dayTheme"))
+        {
+            //默認是白天主題
+            setTheme(R.style.dayTheme);
+        }else
+        {
+            //否则是晚上主題
+            setTheme(R.style.nightTheme);
+        }
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
@@ -58,7 +70,7 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
 
         findViews(); //获取控件
         toolbar.setTitle("Foodie");//设置Toolbar标题
-        toolbar.setTitleTextColor(Color.parseColor("#FFFFFF")); //设置标题颜色
+//        toolbar.setTitleTextColor(Color.parseColor("#FFFFFF")); //设置标题颜色
         setSupportActionBar(toolbar) ;//支持ActionBar
 
 
@@ -97,11 +109,7 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
         });
 
         setStatusBar();
-
-
     }
-
-
     /**
      * 设置沉浸式状态栏，需4.4版本以上
      */
@@ -112,9 +120,10 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
     //将ActionBar添加进来
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
+        super.onCreateOptionsMenu(menu);
         MenuInflater inflater = new MenuInflater(this) ;
         inflater.inflate(R.menu.activity_main, menu);
-        return super.onCreateOptionsMenu(menu);
+        return true;
     }
 
     @Override
@@ -137,15 +146,12 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
         txt_find.setOnClickListener(this);
         txt_order.setOnClickListener(this);
     }
-
-
     //重置所有文本的选中状态
     private void setSelected(){
         txt_waimai.setSelected(false);
         txt_find.setSelected(false);
         txt_order.setSelected(false);
     }
-
     //隐藏所有Fragment
     private void hideAllFragment(FragmentTransaction fragmentTransaction){
         if(homeFragment != null)fragmentTransaction.hide(homeFragment);
@@ -218,13 +224,23 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
             showShare() ;
 
         } else if (id == R.id.nav_mode) {
-            // 点击侧边栏第一项打开夜间
+            //点击完成模式的切换
+            if(PrefUtils.get(MainActivity.this,"theme","dayTheme").equals("dayTheme"))
+            {
+                PrefUtils.put(MainActivity.this,"theme","nightTheme");
+            }else
+            {
+                PrefUtils.put(MainActivity.this, "theme", "dayTheme");
+            }
+            this.recreate();
+            Toast.makeText(MainActivity.this,"换肤",Toast.LENGTH_SHORT).show();
         }
 
         mDrawerLayout.closeDrawer(GravityCompat.START);
         return true;
     }
 
+    //分享
     private void showShare() {
         ShareSDK.initSDK(this);
         OnekeyShare oks = new OnekeyShare();

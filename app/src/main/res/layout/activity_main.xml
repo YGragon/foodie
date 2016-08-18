@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:id="@+id/ll_main"
     android:orientation="vertical"
-    tools:context=".MainActivity">
+    tools:context="com.dongxi.foodie.activity.MainActivity">
     <!--Toolbar-->
     <include layout="@layout/custom_toolbar" />
     <!--DrawerLayout-->

@@ -5,11 +5,8 @@ import android.content.Context;
 import android.os.Handler;
 
 import com.dongxi.foodie.BuildConfig;
-import com.thinkland.sdk.util.CommonFun;
 
 import org.xutils.x;
-
-import cn.smssdk.SMSSDK;
 
 /**
  * 代表当前应用程序
@@ -24,8 +21,7 @@ public class BaseApplication extends Application {
 //  在主线程运行的
 	public void onCreate() {
 		super.onCreate();
-
-
+		//换肤
 		x.Ext.init(this);
 		x.Ext.setDebug(BuildConfig.DEBUG); // 是否输出debug日志, 开启debug会影响性能.
 
@@ -45,6 +41,5 @@ public class BaseApplication extends Application {
 	public static Handler getHandler() {
 		return handler;
 	}
-
 
 }
