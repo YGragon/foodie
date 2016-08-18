@@ -14,12 +14,12 @@
     <ImageView
         android:id="@+id/iv_joke"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="500dp"
         android:layout_below="@id/tv_author"
         android:padding="10dp"
         android:scaleType="centerCrop"
         android:src="@drawable/aller"
-        android:visibility="gone"
+
         />
     <TextView
         android:id="@+id/tv_content"
