@@ -214,7 +214,7 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
 
         } else if (id == R.id.nav_duanzi) {
             // 点击侧边栏第一项打开看个段子
-
+            startActivity(new Intent(MainActivity.this,JokeActivity.class));
         } else if (id == R.id.nav_setting) {
             // 点击侧边栏第一项打开系统设置
             startActivity(new Intent(MainActivity.this,SettingActivity.class));
