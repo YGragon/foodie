@@ -24,7 +24,7 @@ public class MusicActivity extends AppCompatActivity {
         mpv = (MusicPlayerView) findViewById(R.id.mpv);
 
 //
-        mediaPlayer = MediaPlayer.create(this, R.raw.taotai);
+        mediaPlayer = MediaPlayer.create(this, R.raw.givemehappy);
 
         mpv.setCoverURL("https://upload.wikimedia.org/wikipedia/en/b/b3/MichaelsNumberOnes.JPG");
 

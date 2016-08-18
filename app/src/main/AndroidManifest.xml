@@ -132,7 +132,7 @@
             android:exported="true"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Translucent.NoTitleBar" />
-        <activity android:name=".activity.ChangeNightModelActivity"></activity>
+        <activity android:name=".activity.VedioActivity"></activity>
     </application>
 
 </manifest>

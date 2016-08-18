@@ -23,12 +23,10 @@ import com.dongxi.foodie.R;
 import com.dongxi.foodie.fragment.FindFragment;
 import com.dongxi.foodie.fragment.HomeFragment;
 import com.dongxi.foodie.fragment.OrderFragment;
-import com.dongxi.foodie.utils.PrefUtils;
 import com.jaeger.library.StatusBarUtil;
 
 import cn.sharesdk.framework.ShareSDK;
 import cn.sharesdk.onekeyshare.OnekeyShare;
-//ActionBarActivity com.zhy.changeskin.base.BaseSkinActivity
 public class MainActivity extends ActionBarActivity implements View.OnClickListener,NavigationView.OnNavigationItemSelectedListener{
 
     private TextView txt_waimai;
@@ -49,16 +47,16 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
-        //sputils是對SharedPreferences的封裝，代碼就不上了，大家理解意思就行了
-        if(PrefUtils.get(this,"theme","dayTheme").equals("dayTheme"))
-        {
-            //默認是白天主題
-            setTheme(R.style.dayTheme);
-        }else
-        {
-            //否则是晚上主題
-            setTheme(R.style.nightTheme);
-        }
+//        //sputils是對SharedPreferences的封裝，代碼就不上了，大家理解意思就行了
+//        if(PrefUtils.get(this,"theme","dayTheme").equals("dayTheme"))
+//        {
+//            //默認是白天主題
+//            setTheme(R.style.dayTheme);
+//        }else
+//        {
+//            //否则是晚上主題
+//            setTheme(R.style.nightTheme);
+//        }
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
@@ -205,8 +203,8 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
         int id = menuItem.getItemId();
         if (id == R.id.nav_video) {
             // 点击侧边栏第一项打开爽看视频
-//            Intent intent = new Intent(MainActivity.this,AccountActivity.class);
-//            startActivity(intent);
+            Intent intent = new Intent(MainActivity.this,VedioActivity.class);
+            startActivity(intent);
         } else if (id == R.id.nav_music) {
             // 点击侧边栏第一项打开听个音乐
             startActivity(new Intent(MainActivity.this,MusicActivity.class));
@@ -226,16 +224,16 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
 
         } else if (id == R.id.nav_mode) {
             //点击完成模式的切换
-            if(PrefUtils.get(MainActivity.this,"theme","dayTheme").equals("dayTheme"))
-            {
-                PrefUtils.put(MainActivity.this,"theme","nightTheme");
-
-            }else
-            {
-                PrefUtils.put(MainActivity.this, "theme", "dayTheme");
-            }
-            this.recreate();
-            Toast.makeText(MainActivity.this,"换肤",Toast.LENGTH_SHORT).show();
+//            if(PrefUtils.get(MainActivity.this,"theme","dayTheme").equals("dayTheme"))
+//            {
+//                PrefUtils.put(MainActivity.this,"theme","nightTheme");
+//
+//            }else
+//            {
+//                PrefUtils.put(MainActivity.this, "theme", "dayTheme");
+//            }
+//            this.recreate();
+            Toast.makeText(MainActivity.this,"后期载实现换肤",Toast.LENGTH_SHORT).show();
         }
 
         mDrawerLayout.closeDrawer(GravityCompat.START);

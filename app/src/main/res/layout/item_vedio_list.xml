@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="10dp"
+    >
+
+    <TextView
+        android:id="@+id/tv_vedio_dec"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ellipsize="end"
+        android:singleLine="true"
+        android:text="这里是描述这里是描述这里是描述这里是描述这里是描述这里是描述"
+        android:textSize="20sp"
+        />
+        <TextView
+            android:id="@+id/tv_vedio_author"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tv_vedio_dec"
+            android:layout_marginTop="5dp"
+            android:text="这里是作者"
+            />
+        <TextView
+            android:id="@+id/tv_vedio_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/tv_vedio_author"
+            android:layout_below="@id/tv_vedio_dec"
+            android:layout_marginTop="5dp"
+            android:layout_marginLeft="5dp"
+            android:text="这里是时间"
+            />
+
+</RelativeLayout>
