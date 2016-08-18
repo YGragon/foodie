@@ -2,6 +2,7 @@ package com.dongxi.foodie.activity;
 
 import android.app.FragmentTransaction;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -45,7 +46,6 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
     private ActionBarDrawerToggle mDrawerToggle;
     private NavigationView navigationView;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -70,7 +70,8 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
 
         findViews(); //获取控件
         toolbar.setTitle("Foodie");//设置Toolbar标题
-//        toolbar.setTitleTextColor(Color.parseColor("#FFFFFF")); //设置标题颜色
+
+        toolbar.setTitleTextColor(Color.parseColor("#FFFFFF")); //设置标题颜色
         setSupportActionBar(toolbar) ;//支持ActionBar
 
 
@@ -228,6 +229,7 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
             if(PrefUtils.get(MainActivity.this,"theme","dayTheme").equals("dayTheme"))
             {
                 PrefUtils.put(MainActivity.this,"theme","nightTheme");
+
             }else
             {
                 PrefUtils.put(MainActivity.this, "theme", "dayTheme");
