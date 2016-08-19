@@ -2,38 +2,24 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/fragment_order"
     tools:context="com.edg.foodie.fragment.OrderFragment">
 
-
-    <RelativeLayout
+    <android.support.design.widget.TabLayout
+        android:id="@+id/tab_FindFragment_title"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/rl"
-        android:padding="10dp"
-        android:gravity="center"
-        >
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:drawableLeft="@drawable/ic_menu_gallery"
-            android:text="未完成订单"
-            android:textSize="20dp"
-            android:textColor="@color/text_white"
-            android:id="@+id/Nofinshbutton"
-            android:background="@color/colorPrimary"
-            />
-        <Button
-            android:drawableLeft="@drawable/ic_menu_gallery"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@color/colorPrimary"
-            android:textSize="20dp"
-            android:layout_marginTop="20dp"
-            android:textColor="@color/text_white"
-            android:text="已完成订单"
-            android:layout_below="@id/Nofinshbutton"
-            android:id="@+id/Finshbutton"
-            />
-    </RelativeLayout>
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimary"
+        app:tabIndicatorColor="@color/white"
+        app:tabSelectedTextColor="@color/text_yellow"
+        app:tabTextColor="@color/white"
+        app:tabTextAppearance="@style/TabLayoutTextStyle"
+        />
+    <android.support.v4.view.ViewPager
+        android:id="@+id/vp_FindFragment_pager"
+        android:layout_width="fill_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        />
 </FrameLayout>

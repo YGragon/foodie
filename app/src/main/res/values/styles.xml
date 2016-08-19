@@ -1,5 +1,4 @@
 <resources>
-
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <!--导航栏底色-->
@@ -10,7 +9,6 @@
         <item name="colorAccent">@color/colorAccent</item>
         <!--返回键样式-->
         <item name="drawerArrowStyle">@style/AppTheme.DrawerArrowToggle</item>
-
     </style>
 
     <style name="AppTheme.DrawerArrowToggle" parent="Base.Widget.AppCompat.DrawerArrowToggle">
@@ -18,7 +16,6 @@
     </style>
 
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
-
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
     <style name="textview_title_style">
@@ -29,6 +26,7 @@
         <item name="android:textSize">22sp</item>
     </style>
 
+    //底部样式
     <style name="BottomTabStyle">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
@@ -51,6 +49,7 @@
         <item name="android:listSelector">@android:color/transparent</item>
     </style>
 
+    //发现模块的样式
     <style name="item">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
@@ -62,10 +61,10 @@
         <item name="android:drawablePadding">16dp</item>
         <item name="android:textColor">@android:color/black</item>
     </style>
-
-    <style name="AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
-
-    <style name="PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+    //TabLayout的字体
+    <style name="TabLayoutTextStyle">
+        <item name="android:textSize">20sp</item>
+    </style>
 
     <!--白天主题-->
     <style name="dayTheme" parent="AppTheme">

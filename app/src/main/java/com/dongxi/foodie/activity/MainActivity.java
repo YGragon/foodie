@@ -1,6 +1,7 @@
 package com.dongxi.foodie.activity;
 
-import android.app.FragmentTransaction;
+
+import android.support.v4.app.FragmentTransaction;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -27,6 +28,7 @@ import com.jaeger.library.StatusBarUtil;
 
 import cn.sharesdk.framework.ShareSDK;
 import cn.sharesdk.onekeyshare.OnekeyShare;
+
 public class MainActivity extends ActionBarActivity implements View.OnClickListener,NavigationView.OnNavigationItemSelectedListener{
 
     private TextView txt_waimai;
@@ -37,7 +39,7 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
     private HomeFragment homeFragment;
     private FindFragment findFragment;
     private OrderFragment orderFragment;
-    private android.app.FragmentManager fManager ;
+    private android.support.v4.app.FragmentManager fManager ;
 
     private Toolbar toolbar;
     private DrawerLayout mDrawerLayout;
@@ -61,7 +63,7 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        fManager = getFragmentManager();
+        fManager = getSupportFragmentManager();
         bindViews();
         txt_waimai.performClick();   //模拟一次点击，既进去后选择第一项
 
