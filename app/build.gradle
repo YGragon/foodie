@@ -63,4 +63,5 @@ dependencies {
     compile 'com.github.iammert:MusicPlayerView:e3b937c729'
     compile 'me.xiaopan:switchbutton:1.2.0'
     compile 'com.android.support:support-v4:23.4.0'
+    compile 'com.android.support:recyclerview-v7:23.4.0'
 }

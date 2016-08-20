@@ -205,15 +205,13 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
         int id = menuItem.getItemId();
         if (id == R.id.nav_video) {
             // 点击侧边栏第一项打开爽看视频
-            Intent intent = new Intent(MainActivity.this,VedioActivity.class);
-            startActivity(intent);
+            startActivity(new Intent(MainActivity.this,VedioActivity.class));
         } else if (id == R.id.nav_music) {
             // 点击侧边栏第一项打开听个音乐
             startActivity(new Intent(MainActivity.this,MusicActivity.class));
-
         } else if (id == R.id.nav_gallery) {
             // 点击侧边栏第一项打开撩个妹子
-
+            startActivity(new Intent(MainActivity.this,BeautyActivity.class));
         } else if (id == R.id.nav_duanzi) {
             // 点击侧边栏第一项打开看个段子
             startActivity(new Intent(MainActivity.this,JokeActivity.class));

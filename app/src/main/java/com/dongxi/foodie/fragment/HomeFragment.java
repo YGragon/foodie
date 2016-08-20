@@ -1,11 +1,11 @@
 package com.dongxi.foodie.fragment;
 
-import android.support.v4.app.Fragment;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.SystemClock;
+import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,6 +22,8 @@ import com.dongxi.foodie.activity.ShowOrderActivity;
 import com.dongxi.foodie.adapter.HeaderAdapter;
 import com.dongxi.foodie.bean.Food;
 import com.dongxi.foodie.controller.ConvenienceStoreActivity;
+import com.dongxi.foodie.dao.FoodsParams;
+import com.dongxi.foodie.utils.MyBitmapUtils;
 import com.dongxi.foodie.utils.UIUtils;
 import com.dongxi.foodie.view.RefreshListVIew;
 import com.jude.rollviewpager.OnItemClickListener;
@@ -32,7 +34,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.xutils.common.Callback;
-import org.xutils.http.RequestParams;
+import org.xutils.ex.HttpException;
 import org.xutils.x;
 
 import java.util.ArrayList;
@@ -105,6 +107,7 @@ public class HomeFragment extends Fragment {
                 startActivity(intent);
             }
         });
+        //刷新加载监听
         lv_food_list.setOnRefreshListener(new RefreshListVIew.OnRefreshListener() {
             @Override
             public void onPullRefresh() {
@@ -171,26 +174,64 @@ public class HomeFragment extends Fragment {
      * 从服务器获取数据
      */
     private void getDataFromServer() {
+        FoodsParams params = new FoodsParams();
+//        params.addQueryStringParameter("wd", "xUtils");
+        params.wd = "xUtils";
+// 默认缓存存活时间, 单位:毫秒.(如果服务没有返回有效的max-age或Expires)
+        params.setCacheMaxAge(1000 * 60);
+        Callback.Cancelable cancelable
+                // 使用CacheCallback, xUtils将为该请求缓存数据.
+                = x.http().get(params, new Callback.CacheCallback<String>() {
 
-        RequestParams params = new RequestParams("http://www.tngou.net/api/cook/list?page=3&id=2&rows=10");
-        //params.setSslSocketFactory(...); // 设置ssl
-        params.addQueryStringParameter("wd", "xUtils");
-        x.http().get(params, new Callback.CommonCallback<String>() {
+            private boolean hasError = false;
+            private String result = null;
+
+            @Override
+            public boolean onCache(String result) {
+                // 得到缓存数据, 缓存过期后不会进入这个方法.
+                // 如果服务端没有返回过期时间, 参考params.setCacheMaxAge(maxAge)方法.
+                //
+                // * 客户端会根据服务端返回的 header 中 max-age 或 expires 来确定本地缓存是否给 onCache 方法.
+                //   如果服务端没有返回 max-age 或 expires, 那么缓存将一直保存, 除非这里自己定义了返回false的
+                //   逻辑, 那么xUtils将请求新数据, 来覆盖它.
+                //
+                // * 如果信任该缓存返回 true, 将不再请求网络;
+                //   返回 false 继续请求网络, 但会在请求头中加上ETag, Last-Modified等信息,
+                //   如果服务端返回304, 则表示数据没有更新, 不继续加载数据.
+                //
+                this.result = result;
+                return false; // true: 信任缓存数据, 不在发起网络请求; false不信任缓存数据.
+            }
             @Override
             public void onSuccess(String result) {
+                // 注意: 如果服务返回304 或 onCache 选择了信任缓存, 这时result为null.
                 parseData(result);//解析数据
+                if (result != null) {
+                    this.result = result;
+                }
             }
-
             @Override
             public void onError(Throwable ex, boolean isOnCallback) {
+                hasError = true;
+                Toast.makeText(x.app(), ex.getMessage(), Toast.LENGTH_LONG).show();
+                if (ex instanceof HttpException) { // 网络错误
+                    HttpException httpEx = (HttpException) ex;
+                    int responseCode = httpEx.getCode();
+                    String responseMsg = httpEx.getMessage();
+                    String errorResult = httpEx.getResult();
+                    // ...
+                } else { // 其他错误
+                    // ...
+                }
             }
-
             @Override
             public void onCancelled(CancelledException cex) {
+                Toast.makeText(x.app(), "cancelled", Toast.LENGTH_LONG).show();
             }
-
             @Override
             public void onFinished() {
+                if (!hasError && result != null) {
+                }
             }
         });
     }
@@ -226,6 +267,13 @@ public class HomeFragment extends Fragment {
      * Food的适配器
      */
     private class FoodAdapter extends BaseAdapter{
+        private MyBitmapUtils utils;
+
+        public FoodAdapter() {
+            //utils = new BitmapUtils(mActivity);
+            //utils.configDefaultLoadingImage(R.drawable.news_pic_default);
+            utils = new MyBitmapUtils();
+        }
 
         @Override
     public int getCount() {
@@ -262,9 +310,11 @@ public class HomeFragment extends Fragment {
 
         holder.tv_name.setText(foodData.getName());// 设置美食的名字
         holder.tv_count.setText("收藏数：" + foodData.getCount() + " 次");
-        String iconUrl = foodData.getImg();
-        x.image().bind(holder.iv_food, "http://tnfs.tngou.net/img" + iconUrl);
+        String iconUrl = "http://tnfs.tngou.net/img" + foodData.getImg();
+        x.image().bind(holder.iv_food,iconUrl);
 
+
+        utils.display(holder.iv_food, iconUrl);
         return view;
     }
     }
@@ -273,7 +323,5 @@ public class HomeFragment extends Fragment {
         ImageView iv_food;
         TextView tv_name,tv_count;
     }
-
-
 }
 

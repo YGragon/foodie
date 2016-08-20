@@ -133,7 +133,8 @@
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Translucent.NoTitleBar" />
         <activity android:name=".activity.VedioActivity" />
-        <activity android:name=".activity.JokeActivity"></activity>
+        <activity android:name=".activity.JokeActivity" />
+        <activity android:name=".activity.BeautyActivity"></activity>
     </application>
 
 </manifest>
