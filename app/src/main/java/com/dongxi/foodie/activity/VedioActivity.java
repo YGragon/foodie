@@ -3,17 +3,22 @@ package com.dongxi.foodie.activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
+import android.support.design.widget.Snackbar;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.util.TypedValue;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.BaseAdapter;
-import android.widget.ListView;
 import android.widget.ProgressBar;
-import android.widget.TextView;
+import android.widget.Toast;
 
 import com.dongxi.foodie.R;
+import com.dongxi.foodie.adapter.VedioAdapter;
+import com.dongxi.foodie.adapter.VedioAdapter.OnRecyclerViewItemClickListener;
 import com.dongxi.foodie.bean.VedioInfo;
+import com.dongxi.foodie.view.DividerItemDecoration;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -26,47 +31,121 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * 爽看视频，数据采用干活集中营的数据
+ * 爽看视频模块，数据采用干活集中营的数据
  */
 public class VedioActivity extends AppCompatActivity {
 
-    private ListView lv_vedio;
+    private RecyclerView rl_vedio;
+    private SwipeRefreshLayout swipelayout ;
     List<VedioInfo> vedioInfos = new ArrayList<VedioInfo>();
     private VedioInfo vedioInfo;
     private ProgressBar pb_progress;
+    private VedioAdapter vedioAdapter;
+//    private SpacesItemDecoration decoration;
+
+    private LinearLayoutManager linearLayoutManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_vedio);
 
-        lv_vedio = (ListView) findViewById(R.id.lv_vedio);
+        swipelayout = (SwipeRefreshLayout) findViewById(R.id.swipe_layout);
+        rl_vedio = (RecyclerView) findViewById(R.id.rl_vedio);
         pb_progress = (ProgressBar) findViewById(R.id.pb_progress);
 
-        lv_vedio.setAdapter(new VedioAdapter());
+        linearLayoutManager = new LinearLayoutManager(this);
+        rl_vedio.setLayoutManager(linearLayoutManager);
 
-        getDataFromServer();
+        //设置adapter
+        vedioAdapter = new VedioAdapter(vedioInfos);
+        rl_vedio.setAdapter(vedioAdapter);
 
-        lv_vedio.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        vedioAdapter.setOnItemClickListener(new OnRecyclerViewItemClickListener(){
+
             @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            public void onItemClick(View view, int position) {
                 //将视频地址添加给每个item然后跳转网页
                 String uriStr = vedioInfos.get(position).getUrl();
+                Toast.makeText(VedioActivity.this, uriStr, Toast.LENGTH_LONG).show();
                 Intent intent = new Intent(Intent.ACTION_VIEW,
                         ( Uri.parse(uriStr))
                 ).addCategory(Intent.CATEGORY_BROWSABLE)
                         .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(intent);
             }
+
+            @Override
+            public void onItemLongClick(View view, int position) {
+
+            }
+
         });
+        //设置item之间的间隔,分割线等
+//        decoration = new SpacesItemDecoration(10);
+//        rl_vedio.addItemDecoration(decoration);
+        rl_vedio.addItemDecoration(new DividerItemDecoration(this,
+                DividerItemDecoration.VERTICAL_LIST));
+
+        //设置进度条的背景颜色主题
+        swipelayout.setProgressBackgroundColorSchemeResource(android.R.color.white);
+        //设置进度条的颜色主题
+        swipelayout.setColorSchemeResources(android.R.color.holo_blue_light,
+                android.R.color.holo_red_light,android.R.color.holo_orange_light,
+                android.R.color.holo_green_light);
+        /*第一个参数scale就是就是刷新那个圆形进度是是否缩放,如果为true表示缩放,圆形进度图像就会从小到大展示出来,为false就不缩放
+          第二个参数start和end就是那刷新进度条展示的相对于默认的展示位置,start和end组成一个范围，
+            在这个y轴范围就是那个圆形进度ProgressView展示的位置
+        */
+        swipelayout.setProgressViewOffset(false, 0, (int) TypedValue
+                .applyDimension(TypedValue.COMPLEX_UNIT_DIP, 24, getResources()
+                        .getDisplayMetrics()));
+        //下拉刷新操作
+        swipelayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        swipelayout.setRefreshing(false);
+                        vedioAdapter.notifyDataSetChanged();
+                        Snackbar.make(swipelayout,"刷新成功",Snackbar.LENGTH_LONG).show();
+                    }
+                }, 2000);
+            }
+        });
+
+
+        getDataFromServer();
     }
+    /**
+     * 设置 item 间隔
+     */
+//    public class SpacesItemDecoration extends RecyclerView.ItemDecoration {
+//
+//        private int space;
+//
+//        public SpacesItemDecoration(int space) {
+//            this.space=space;
+//        }
+//
+//        @Override
+//        public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
+//            outRect.left=space;
+//            outRect.right=space;
+//            outRect.bottom=space;
+//            if(parent.getChildAdapterPosition(view)==0){
+//                outRect.top=space;
+//            }
+//        }
+//    }
 
     /**
      * 从服务器获取数据
      */
     private void getDataFromServer() {
         pb_progress.setVisibility(View.VISIBLE);
-        lv_vedio.setVisibility(View.GONE);
+        swipelayout.setVisibility(View.GONE);
         RequestParams params = new RequestParams("http://gank.io/api/search/query/listview/category/%E4%BC%91%E6%81%AF%E8%A7%86%E9%A2%91/count/20/page/1");
         //params.setSslSocketFactory(...); // 设置ssl
         params.addQueryStringParameter("wd", "xUtils");
@@ -85,7 +164,7 @@ public class VedioActivity extends AppCompatActivity {
             @Override
             public void onFinished() {
                 pb_progress.setVisibility(View.GONE);
-                lv_vedio.setVisibility(View.VISIBLE);
+                swipelayout.setVisibility(View.VISIBLE);
             }
         });
 
@@ -114,47 +193,4 @@ public class VedioActivity extends AppCompatActivity {
         }
     }
 
-        private class VedioAdapter extends BaseAdapter {
-        @Override
-        public int getCount() {
-            return vedioInfos.size();
-        }
-
-        @Override
-        public Object getItem(int position) {
-            return vedioInfos.get(position);
-        }
-
-        @Override
-        public long getItemId(int position) {
-            return position;
-        }
-
-        @Override
-        public View getView(int position, View convertView, ViewGroup parent) {
-            View view = null;
-            ViewHolder viewHolder ;
-            if (convertView == null) {
-                view = View.inflate(VedioActivity.this, R.layout.item_vedio_list, null);
-                viewHolder=new ViewHolder();
-                viewHolder.tv_vedio_dec = (TextView) view.findViewById(R.id.tv_vedio_dec);
-                viewHolder.tv_vedio_author = (TextView) view.findViewById(R.id.tv_vedio_author);
-                viewHolder.tv_vedio_time = (TextView) view.findViewById(R.id.tv_vedio_time);
-
-                view.setTag(viewHolder);
-            }else{
-                view = convertView ;
-                viewHolder = (ViewHolder) view.getTag();
-            }
-            vedioInfo = vedioInfos.get(position);
-            viewHolder.tv_vedio_dec.setText(vedioInfo.getDesc());
-            viewHolder.tv_vedio_author.setText("[ "+ vedioInfo.getWho()+" ]");
-            viewHolder.tv_vedio_time.setText(vedioInfo.getPublishedAt());
-            return view;
-        }
-    }
-    static class ViewHolder{
-        TextView tv_vedio_dec,tv_vedio_author,tv_vedio_time;
-
-    }
 }

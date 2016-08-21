@@ -14,7 +14,7 @@ import android.view.View;
 import android.widget.ProgressBar;
 
 import com.dongxi.foodie.R;
-import com.dongxi.foodie.adapter.MasonryAdapter;
+import com.dongxi.foodie.adapter.BeautyAdapter;
 import com.dongxi.foodie.bean.Beauty;
 
 import org.json.JSONArray;
@@ -32,9 +32,8 @@ public class BeautyActivity extends AppCompatActivity {
     private RecyclerView recyclerView ;
     private Beauty beautyInfo ;
     private SwipeRefreshLayout swipeLayout;
-    private MasonryAdapter adapter;
+    private BeautyAdapter adapter;
     private SpacesItemDecoration decoration;
-    private int lastVisibleItem;
     private StaggeredGridLayoutManager staggeredGridLayoutManager;
     private ProgressBar pb_progress;
     @Override
@@ -51,7 +50,7 @@ public class BeautyActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(staggeredGridLayoutManager);
 
         //设置adapter
-        adapter = new MasonryAdapter(beautyList);
+        adapter = new BeautyAdapter(beautyList);
         recyclerView.setAdapter(adapter);
         //设置item之间的间隔
         decoration = new SpacesItemDecoration(10);

@@ -66,15 +66,5 @@
         <item name="android:textSize">20sp</item>
     </style>
 
-    <!--白天主题-->
-    <style name="dayTheme" parent="AppTheme">
-        <item name="android:textColor">#525252</item>
-        <item name="android:background">#f7f7f7</item>
-    </style>
-    <!--夜间主题-->
-    <style name="nightTheme" parent="AppTheme">
-        <item name="android:textColor">#868a96</item>
-        <item name="android:background">#1e1e2a </item>
-    </style>
 
 </resources>

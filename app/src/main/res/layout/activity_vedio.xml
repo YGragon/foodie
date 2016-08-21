@@ -3,18 +3,25 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_margin="5dp"
     tools:context="com.dongxi.foodie.activity.VedioActivity">
 
-    <ListView
-        android:id="@+id/lv_vedio"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-    </ListView>
     <ProgressBar
         android:id="@+id/pb_progress"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_gravity="center"
         android:indeterminateDrawable="@drawable/custom_progress" />
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/swipe_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        >
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rl_vedio"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
 
+    </android.support.v4.widget.SwipeRefreshLayout>
 </RelativeLayout>

@@ -18,30 +18,30 @@ import java.util.List;
 /**
  * Created by Administrator on 2016/8/20.
  */
-public class MasonryAdapter extends RecyclerView.Adapter<MasonryAdapter.MasonryView>{
+public class BeautyAdapter extends RecyclerView.Adapter<BeautyAdapter.BeautyView>{
 
     private List<Beauty> beautyList = new ArrayList<Beauty>();
     private Beauty beautyInfo;
 
 
-    public MasonryAdapter(List<Beauty> list) {
+    public BeautyAdapter(List<Beauty> list) {
         beautyList=list;
     }
 
     @Override
-    public MasonryView  onCreateViewHolder(ViewGroup viewGroup, int i) {
+    public BeautyView  onCreateViewHolder(ViewGroup viewGroup, int i) {
         View view= LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.beauty_item_list, viewGroup, false);
-        return new MasonryView (view);
+        return new BeautyView (view);
     }
 
     @Override
-    public void onBindViewHolder(MasonryView masonryView, int position) {
+    public void onBindViewHolder(BeautyView beautyView, int position) {
 
         beautyInfo = beautyList.get(position);
         String iconUrl = beautyInfo.getUrl();
-        x.image().bind(masonryView.beauty_item_img,iconUrl);//设置图片
+        x.image().bind(beautyView.beauty_item_img,iconUrl);//设置图片
 //        beautyInfo.getPublishedAt().substring(0,10) ;//截取日期字符串
-        masonryView.beauty_item_time.setText(beautyInfo.getPublishedAt().substring(0,10) );//设置图片时间
+        beautyView.beauty_item_time.setText(beautyInfo.getPublishedAt().substring(0,10) );//设置图片时间
     }
 
     @Override
@@ -49,12 +49,12 @@ public class MasonryAdapter extends RecyclerView.Adapter<MasonryAdapter.MasonryV
         return beautyList.size();
     }
 
-    public static class MasonryView  extends  RecyclerView.ViewHolder{
+    public static class BeautyView  extends  RecyclerView.ViewHolder{
 
         ImageView beauty_item_img;
         TextView beauty_item_time;
 
-        public MasonryView (View itemView){
+        public BeautyView (View itemView){
             super(itemView);
             beauty_item_img= (ImageView) itemView.findViewById(R.id.beauty_item_img );
             beauty_item_time= (TextView) itemView.findViewById(R.id.beauty_item_time);
