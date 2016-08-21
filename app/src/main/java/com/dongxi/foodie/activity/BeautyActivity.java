@@ -11,6 +11,7 @@ import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.View;
+import android.widget.ProgressBar;
 
 import com.dongxi.foodie.R;
 import com.dongxi.foodie.adapter.MasonryAdapter;
@@ -33,7 +34,9 @@ public class BeautyActivity extends AppCompatActivity {
     private SwipeRefreshLayout swipeLayout;
     private MasonryAdapter adapter;
     private SpacesItemDecoration decoration;
-
+    private int lastVisibleItem;
+    private StaggeredGridLayoutManager staggeredGridLayoutManager;
+    private ProgressBar pb_progress;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,9 +44,10 @@ public class BeautyActivity extends AppCompatActivity {
 
         recyclerView= (RecyclerView) findViewById(R.id.recycler);
         swipeLayout = (SwipeRefreshLayout) findViewById(R.id.swipeLayout);
+        pb_progress = (ProgressBar) findViewById(R.id.pb_progress);
         //设置layoutManager
         //设置瀑布流
-        StaggeredGridLayoutManager staggeredGridLayoutManager = new StaggeredGridLayoutManager(2,StaggeredGridLayoutManager.VERTICAL) ;
+        staggeredGridLayoutManager = new StaggeredGridLayoutManager(2,StaggeredGridLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(staggeredGridLayoutManager);
 
         //设置adapter
@@ -74,11 +78,13 @@ public class BeautyActivity extends AppCompatActivity {
                     public void run() {
                         swipeLayout.setRefreshing(false);
                         adapter.notifyDataSetChanged();
-                        Snackbar.make(swipeLayout,"刷新成功",Snackbar.LENGTH_SHORT).show();
+                        Snackbar.make(swipeLayout,"刷新成功",Snackbar.LENGTH_LONG).show();
                     }
                 }, 2000);
             }
         });
+        //RecyclerView滑动监听
+
         getDataFromServer();//从服务器获取数据
     }
 
@@ -108,6 +114,8 @@ public class BeautyActivity extends AppCompatActivity {
      * 从服务器获取数据
      */
     private void getDataFromServer() {
+        pb_progress.setVisibility(View.VISIBLE);
+        swipeLayout.setVisibility(View.GONE);
         //数据来自干活集中营
         RequestParams params = new RequestParams("http://gank.io/api/search/query/listview/category/%E7%A6%8F%E5%88%A9/count/40/page/1");
         //params.setSslSocketFactory(...); // 设置ssl
@@ -126,6 +134,8 @@ public class BeautyActivity extends AppCompatActivity {
             }
             @Override
             public void onFinished() {
+                pb_progress.setVisibility(View.GONE);
+                swipeLayout.setVisibility(View.VISIBLE);
             }
         });
     }

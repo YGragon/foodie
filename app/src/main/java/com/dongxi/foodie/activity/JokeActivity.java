@@ -2,12 +2,12 @@ package com.dongxi.foodie.activity;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.dongxi.foodie.R;
@@ -28,12 +28,16 @@ public class JokeActivity extends AppCompatActivity {
     private ListView lv_joke;
     List<JokeInfo> jokeInfos = new ArrayList<JokeInfo>();
     private JokeInfo jokenfo;
+    private ProgressBar pb_progress;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_joke);
 
         lv_joke = (ListView) findViewById(R.id.lv_joke);
+        pb_progress = (ProgressBar) findViewById(R.id.pb_progress);
+
         lv_joke.setAdapter(new JokeAdapter());
 
         getDataFromServer();
@@ -44,14 +48,15 @@ public class JokeActivity extends AppCompatActivity {
      * 从服务器获取数据
      */
     private void getDataFromServer() {
-        //聚合数据API,通过经纬度和查询半径找
+
+        pb_progress.setVisibility(View.VISIBLE);
+        lv_joke.setVisibility(View.GONE);
         RequestParams params = new RequestParams("http://api.1-blog.com/biz/bizserver/xiaohua/list.do");
         //params.setSslSocketFactory(...); // 设置ssl
         params.addQueryStringParameter("wd", "xUtils");
         x.http().get(params,new Callback.CommonCallback<String>(){
             @Override
             public void onSuccess(String result) {
-                Log.d("VedioActivity",result);//有结果
                 parseData(result);//解析数据
             }
             @Override
@@ -62,6 +67,8 @@ public class JokeActivity extends AppCompatActivity {
             }
             @Override
             public void onFinished() {
+                pb_progress.setVisibility(View.GONE);
+                lv_joke.setVisibility(View.VISIBLE);
             }
         });
 

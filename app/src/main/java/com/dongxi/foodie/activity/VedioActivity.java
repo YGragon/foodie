@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.dongxi.foodie.R;
@@ -32,6 +33,7 @@ public class VedioActivity extends AppCompatActivity {
     private ListView lv_vedio;
     List<VedioInfo> vedioInfos = new ArrayList<VedioInfo>();
     private VedioInfo vedioInfo;
+    private ProgressBar pb_progress;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +41,8 @@ public class VedioActivity extends AppCompatActivity {
         setContentView(R.layout.activity_vedio);
 
         lv_vedio = (ListView) findViewById(R.id.lv_vedio);
+        pb_progress = (ProgressBar) findViewById(R.id.pb_progress);
+
         lv_vedio.setAdapter(new VedioAdapter());
 
         getDataFromServer();
@@ -61,7 +65,8 @@ public class VedioActivity extends AppCompatActivity {
      * 从服务器获取数据
      */
     private void getDataFromServer() {
-        //聚合数据API,通过经纬度和查询半径找
+        pb_progress.setVisibility(View.VISIBLE);
+        lv_vedio.setVisibility(View.GONE);
         RequestParams params = new RequestParams("http://gank.io/api/search/query/listview/category/%E4%BC%91%E6%81%AF%E8%A7%86%E9%A2%91/count/20/page/1");
         //params.setSslSocketFactory(...); // 设置ssl
         params.addQueryStringParameter("wd", "xUtils");
@@ -69,6 +74,7 @@ public class VedioActivity extends AppCompatActivity {
             @Override
             public void onSuccess(String result) {
                 parseData(result);//解析数据
+
             }
             @Override
             public void onError(Throwable ex, boolean isOnCallback) {
@@ -78,6 +84,8 @@ public class VedioActivity extends AppCompatActivity {
             }
             @Override
             public void onFinished() {
+                pb_progress.setVisibility(View.GONE);
+                lv_vedio.setVisibility(View.VISIBLE);
             }
         });
 

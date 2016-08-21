@@ -9,7 +9,12 @@
         android:id="@+id/lv_vedio"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-
     </ListView>
+    <ProgressBar
+        android:id="@+id/pb_progress"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:indeterminateDrawable="@drawable/custom_progress" />
 
 </RelativeLayout>
