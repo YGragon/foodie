@@ -36,6 +36,10 @@ public class BeautyActivity extends AppCompatActivity {
     private SpacesItemDecoration decoration;
     private StaggeredGridLayoutManager staggeredGridLayoutManager;
     private ProgressBar pb_progress;
+    private int lastVisibleItem;
+    private int pageSize = 30;
+    private int page = 1;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -83,8 +87,63 @@ public class BeautyActivity extends AppCompatActivity {
             }
         });
         //RecyclerView滑动监听
+        //滑动监听
+        recyclerView.setOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView,
+                                             int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+
+                if (newState == RecyclerView.SCROLL_STATE_IDLE
+                        && lastVisibleItem + 1 == adapter.getItemCount()) {
+                    swipeLayout.setRefreshing(true);
+                    // 此处在现实项目中，请换成网络请求数据代码，sendRequest .....
+                    getDataFromServer();
+                    new Handler().postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            page++;
+                            swipeLayout.setRefreshing(false);
+                            adapter.notifyDataSetChanged();
+                            Snackbar.make(swipeLayout,"刷新成功",Snackbar.LENGTH_LONG).show();
+                        }
+                    }, 2000);
+                }
+            }
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+                lastVisibleItem = getLastVisiblePosition();
+            }
+        });
 
         getDataFromServer();//从服务器获取数据
+    }
+    /**
+     * 获取最后一条展示的位置
+     *
+     * @return
+     */
+    private int getLastVisiblePosition() {
+        int position;
+            int[] lastPositions = staggeredGridLayoutManager.findLastVisibleItemPositions(
+                    new int[staggeredGridLayoutManager.getSpanCount()]);
+            position = getMaxPosition(lastPositions);
+        return position;
+    }
+    /**
+     * 获得最大的位置
+     *
+     * @param positions
+     * @return
+     */
+    private int getMaxPosition(int[] positions) {
+        int size = positions.length;
+        int maxPosition = Integer.MIN_VALUE;
+        for (int i = 0; i < size; i++) {
+            maxPosition = Math.max(maxPosition, positions[i]);
+        }
+        return maxPosition;
     }
 
     /**
@@ -116,7 +175,9 @@ public class BeautyActivity extends AppCompatActivity {
         pb_progress.setVisibility(View.VISIBLE);
         swipeLayout.setVisibility(View.GONE);
         //数据来自干活集中营
-        RequestParams params = new RequestParams("http://gank.io/api/search/query/listview/category/%E7%A6%8F%E5%88%A9/count/40/page/1");
+        RequestParams params = new RequestParams("http://gank.io/api/search/query/listview/" +
+                "category/%E7%A6%8F%E5%88%A9/count/" +
+                String.valueOf(pageSize)+"/page" + "/" +String.valueOf(page));
         //params.setSslSocketFactory(...); // 设置ssl
         params.addQueryStringParameter("wd", "xUtils");
         x.http().get(params,new Callback.CommonCallback<String>(){

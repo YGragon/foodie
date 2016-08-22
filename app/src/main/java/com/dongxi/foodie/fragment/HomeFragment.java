@@ -23,7 +23,6 @@ import com.dongxi.foodie.adapter.HeaderAdapter;
 import com.dongxi.foodie.bean.Food;
 import com.dongxi.foodie.controller.ConvenienceStoreActivity;
 import com.dongxi.foodie.dao.FoodsParams;
-import com.dongxi.foodie.utils.MyBitmapUtils;
 import com.dongxi.foodie.utils.UIUtils;
 import com.dongxi.foodie.view.RefreshListVIew;
 import com.jude.rollviewpager.OnItemClickListener;
@@ -47,12 +46,11 @@ public class HomeFragment extends Fragment {
 
     public static Map<String,String> locmap = new HashMap<String,String>();
 
-    private Food food;
+//    private Food food;
     private Food info;
 
     private RollPagerView mRollViewPager;
     private Button btn_convenience;
-
 
     private RefreshListVIew lv_food_list;
     private ArrayList<Food> list = new ArrayList<Food>();
@@ -89,7 +87,6 @@ public class HomeFragment extends Fragment {
         lv_food_list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
                 ListView listView = (ListView) parent;
                 Food foodBundle = (Food) listView.getItemAtPosition(position);
 
@@ -156,12 +153,12 @@ public class HomeFragment extends Fragment {
 
                 if(b){
                     //加载更多
-                    list.add(food);
+                    list.add(info);
 //                    list.add("加载更多的数据-2");
 //                    list.add("加载更多的数据-3");
                 }else {
                     //下拉刷新
-                    list.add(0, food);
+                    list.add(0, info);
                 }
 
                 //在UI线程更新UI
@@ -267,12 +264,12 @@ public class HomeFragment extends Fragment {
      * Food的适配器
      */
     private class FoodAdapter extends BaseAdapter{
-        private MyBitmapUtils utils;
+//        private MyBitmapUtils utils;
 
         public FoodAdapter() {
             //utils = new BitmapUtils(mActivity);
             //utils.configDefaultLoadingImage(R.drawable.news_pic_default);
-            utils = new MyBitmapUtils();
+//            utils = new MyBitmapUtils();
         }
 
         @Override
@@ -313,8 +310,7 @@ public class HomeFragment extends Fragment {
         String iconUrl = "http://tnfs.tngou.net/img" + foodData.getImg();
         x.image().bind(holder.iv_food,iconUrl);
 
-
-        utils.display(holder.iv_food, iconUrl);
+//        utils.display(holder.iv_food, iconUrl);
         return view;
     }
     }
