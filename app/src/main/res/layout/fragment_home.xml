@@ -3,12 +3,31 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_margin="5dp"
     tools:context="com.dongxi.foodie.fragment.HomeFragment">
-
-    <com.dongxi.foodie.view.RefreshListVIew
-        android:id="@+id/lv_food_list"
+    <ProgressBar
+        android:id="@+id/pb_progress"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" >
-    </com.dongxi.foodie.view.RefreshListVIew>
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:indeterminateDrawable="@drawable/custom_progress" />
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/swipelayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        >
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/lv_food_list"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+    </android.support.v4.widget.SwipeRefreshLayout>
+
+    <!--<com.dongxi.foodie.view.RefreshListVIew-->
+        <!--android:id="@+id/lv_food_list"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent" >-->
+    <!--</com.dongxi.foodie.view.RefreshListVIew>-->
 
 </FrameLayout>

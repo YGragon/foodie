@@ -23,7 +23,7 @@ import android.widget.Toast;
 import com.dongxi.foodie.R;
 import com.dongxi.foodie.fragment.FindFragment;
 import com.dongxi.foodie.fragment.HomeFragment;
-import com.dongxi.foodie.fragment.OrderFragment;
+import com.dongxi.foodie.fragment.CommunityFragment;
 import com.jaeger.library.StatusBarUtil;
 
 import cn.sharesdk.framework.ShareSDK;
@@ -38,7 +38,7 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
 
     private HomeFragment homeFragment;
     private FindFragment findFragment;
-    private OrderFragment orderFragment;
+    private CommunityFragment communityFragment;
     private android.support.v4.app.FragmentManager fManager ;
 
     private Toolbar toolbar;
@@ -157,7 +157,7 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
     private void hideAllFragment(FragmentTransaction fragmentTransaction){
         if(homeFragment != null)fragmentTransaction.hide(homeFragment);
         if(findFragment != null)fragmentTransaction.hide(findFragment);
-        if(orderFragment != null)fragmentTransaction.hide(orderFragment);
+        if(communityFragment != null)fragmentTransaction.hide(communityFragment);
     }
 
     @Override
@@ -188,11 +188,11 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
             case R.id.txt_order:
                 setSelected();
                 txt_order.setSelected(true);
-                if(orderFragment == null){
-                    orderFragment = new OrderFragment();
-                    fTransaction.add(R.id.ly_content,orderFragment);
+                if(communityFragment == null){
+                    communityFragment = new CommunityFragment();
+                    fTransaction.add(R.id.ly_content, communityFragment);
                 }else{
-                    fTransaction.show(orderFragment);
+                    fTransaction.show(communityFragment);
                 }
                 break;
         }

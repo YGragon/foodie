@@ -61,12 +61,31 @@ public class VedioActivity extends AppCompatActivity {
         linearLayoutManager = new LinearLayoutManager(this);
         rl_vedio.setLayoutManager(linearLayoutManager);
 
-        //配置RecyclerView 可以提高执行效率, 前提你要知道有多少不变的item
-        rl_vedio.setHasFixedSize(true);
-
         //设置adapter
         vedioAdapter = new VedioAdapter(vedioInfos);
         rl_vedio.setAdapter(vedioAdapter);
+
+        //配置RecyclerView 可以提高执行效率, 前提你要知道有多少不变的item
+        rl_vedio.setHasFixedSize(true);
+
+        //设置item之间的间隔,分割线等
+        rl_vedio.addItemDecoration(new DividerItemDecoration(this,
+                DividerItemDecoration.VERTICAL_LIST));
+
+        //设置进度条的背景颜色主题
+        swipelayout.setProgressBackgroundColorSchemeResource(android.R.color.white);
+        //设置进度条的颜色主题
+        swipelayout.setColorSchemeResources(android.R.color.holo_blue_light,
+                android.R.color.holo_red_light,android.R.color.holo_orange_light,
+                android.R.color.holo_green_light);
+        /*第一个参数scale就是就是刷新那个圆形进度是是否缩放,如果为true表示缩放,圆形进度图像就会从小到大展示出来,为false就不缩放
+          第二个参数start和end就是那刷新进度条展示的相对于默认的展示位置,start和end组成一个范围，
+            在这个y轴范围就是那个圆形进度ProgressView展示的位置
+        // 这句话是为了，第一次进入页面的时候显示加载进度条
+        */
+        swipelayout.setProgressViewOffset(false, 0, (int) TypedValue
+                .applyDimension(TypedValue.COMPLEX_UNIT_DIP, 24, getResources()
+                        .getDisplayMetrics()));
 
         //滑动监听
         rl_vedio.setOnScrollListener(new RecyclerView.OnScrollListener() {
@@ -84,6 +103,7 @@ public class VedioActivity extends AppCompatActivity {
                         @Override
                         public void run() {
                             page++;
+                            Toast.makeText(VedioActivity.this,"加载更多:page = " + page,Toast.LENGTH_LONG).show();
                             swipelayout.setRefreshing(false);
                             vedioAdapter.notifyDataSetChanged();
                             Snackbar.make(swipelayout,"刷新成功",Snackbar.LENGTH_LONG).show();
@@ -115,24 +135,6 @@ public class VedioActivity extends AppCompatActivity {
                 Toast.makeText(VedioActivity.this,"别长摁太久哦",Toast.LENGTH_LONG).show();
             }
         });
-        //设置item之间的间隔,分割线等
-        rl_vedio.addItemDecoration(new DividerItemDecoration(this,
-                DividerItemDecoration.VERTICAL_LIST));
-
-        //设置进度条的背景颜色主题
-        swipelayout.setProgressBackgroundColorSchemeResource(android.R.color.white);
-        //设置进度条的颜色主题
-        swipelayout.setColorSchemeResources(android.R.color.holo_blue_light,
-                android.R.color.holo_red_light,android.R.color.holo_orange_light,
-                android.R.color.holo_green_light);
-        /*第一个参数scale就是就是刷新那个圆形进度是是否缩放,如果为true表示缩放,圆形进度图像就会从小到大展示出来,为false就不缩放
-          第二个参数start和end就是那刷新进度条展示的相对于默认的展示位置,start和end组成一个范围，
-            在这个y轴范围就是那个圆形进度ProgressView展示的位置
-        // 这句话是为了，第一次进入页面的时候显示加载进度条
-        */
-        swipelayout.setProgressViewOffset(false, 0, (int) TypedValue
-                .applyDimension(TypedValue.COMPLEX_UNIT_DIP, 24, getResources()
-                        .getDisplayMetrics()));
 
         //下拉刷新操作
         swipelayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {

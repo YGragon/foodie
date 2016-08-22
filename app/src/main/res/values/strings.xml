@@ -1,7 +1,7 @@
 <resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
 
-    <string name="app_name">吃货宝</string>
-    <string name="home">外卖</string>
+    <string name="app_name">厨神菜谱</string>
+    <string name="home">菜谱</string>
     <string name="action_search">搜索</string>
     <string name="open_drawer">抽屉打开了</string>
     <string name="close_drawer">抽屉关闭了</string>
@@ -20,16 +20,15 @@
     <color name="edittext_line_color">#000000</color>
     <string name="title_activity_jump_to">JumpToActivity</string>
 
-    <string name="tab_menu_waimai">外卖</string>
-    <string name="tab_menu_find">发现</string>
-    <string name="tab_menu_order">订单</string>
+    <string name="tab_menu_waimai">菜谱</string>
+    <string name="tab_menu_find">附近</string>
+    <string name="tab_menu_order">社区</string>
     <string name="tab_menu_setting">设置</string>
 
 
     <string name="reback">返回</string>
     <string name="start">启动</string>
     <string name="title_activity_zhuce">注册界面</string>
-    <string name="text">新的activity</string>
     <string name="title_activity_main2">注  册</string>
     <string name="title_activity_test">test</string>
     <string name="login">登录</string>
@@ -42,13 +41,10 @@
     <string name="getmessage">获取验证码</string>
     <string name="confimMessage">验证码：</string>
     <string name="setting">系统设置</string>
-    <string name="font">字体大小:</string>
-    <string name="update">自动更新:</string>
-    <string name="cache">清理缓存:</string>
-    <string name="cache2">清理缓存</string>
+    <string name="update">自动更新</string>
+    <string name="cache">清理缓存</string>
     <string name="advice">意见反馈</string>
     <string name="about">关于吃货宝</string>
-    <string name="restset">恢复默认设置</string>
     <string name="exit">退出登录</string>
 
     <string name="smssdk_receive_msg"><Data>&lt;font color=#209526>%s&lt;/font>秒</Data></string>

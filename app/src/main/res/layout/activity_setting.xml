@@ -49,7 +49,7 @@
         <me.xiaopan.switchbutton.SwitchButton
             style="@style/item"
             android:id="@+id/switch_update"
-            android:text="自动更新"
+            android:text="@string/update"
             android:textSize="18sp"
             android:checked="true"
             android:background="@drawable/selector_preference_single"
@@ -61,7 +61,7 @@
         <me.xiaopan.switchbutton.SwitchButton
             style="@style/item"
             android:id="@+id/switch_clean"
-            android:text="清理缓存"
+            android:text="@string/cache"
             android:textSize="18sp"
             android:layout_marginTop="20dp"
             android:checked="true"
@@ -73,7 +73,6 @@
             app:sliderDrawable="@drawable/selector_switch_slider"/>
 
     </LinearLayout>
-
     <View
         android:id="@+id/view1"
         android:layout_below="@id/update"
@@ -82,8 +81,6 @@
         android:layout_height="1dp"
         android:background="#000000"
         />
-
-
     <RelativeLayout
         android:layout_marginTop="20dp"
         android:id="@+id/advice"

@@ -46,7 +46,6 @@ public class VedioAdapter  extends RecyclerView.Adapter<VedioAdapter.VedioView>{
         vedioView.tv_vedio_author.setText(auhtor);
         vedioView.tv_vedio_time.setText(time );//设置图片时间
 
-
         // 如果设置了回调，则设置点击事件
         if (mOnItemClickListener != null)
         {
