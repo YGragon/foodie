@@ -1,7 +1,5 @@
 package com.dongxi.foodie.bean;
 
-import java.util.ArrayList;
-
 /**
  * 作者：Aller  2016/7/20 09:24
  *
@@ -14,8 +12,9 @@ public class Food {
     private String name;//名称
     private String img;//图片
     private String count ;//访问次数
+    private String description ;//描述
+    private String food ;//食材
 
-    private int number ;
 
     public Food() {
     }
@@ -25,6 +24,31 @@ public class Food {
         this.name = name;
         this.img = img;
         this.count = count;
+    }
+
+    public Food(int id, String name, String img, String count, String description, String food) {
+        this.id = id;
+        this.name = name;
+        this.img = img;
+        this.count = count;
+        this.description = description;
+        this.food = food;
+    }
+
+    public String getFood() {
+        return food;
+    }
+
+    public void setFood(String food) {
+        this.food = food;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public int getId() {
@@ -65,7 +89,9 @@ public class Food {
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", img='" + img + '\'' +
-                ", count=" + count +
+                ", count='" + count + '\'' +
+                ", description='" + description + '\'' +
+                ", food='" + food + '\'' +
                 '}';
     }
 }

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.dongxi.foodie.activity.FoodDetailActivity">
+
+    <ImageView
+        android:id="@+id/iv_food_details"
+        android:layout_width="match_parent"
+        android:layout_height="330dp"
+        android:src="@mipmap/logo"/>
+    <TextView
+        android:id="@+id/tv_food_mater"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/iv_food_details"
+        android:layout_margin="5dp"
+        android:text="食材："
+        android:textColor="@color/colorAccent"
+        android:textSize="20sp"/>
+    <TextView
+        android:id="@+id/tv_food_material"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tv_food_mater"
+        android:layout_margin="5dp"
+        android:lineSpacingExtra="5dp"
+        android:textSize="20sp"/>
+    <TextView
+        android:id="@+id/tv_food"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tv_food_material"
+        android:layout_margin="5dp"
+        android:text="做法描述："
+        android:textColor="@color/colorAccent"
+        android:textSize="20sp"/>
+    <TextView
+        android:id="@+id/tv_food_desc"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tv_food"
+        android:layout_margin="5dp"
+        android:lineSpacingExtra="5dp"
+        android:textSize="20sp"/>
+</RelativeLayout>

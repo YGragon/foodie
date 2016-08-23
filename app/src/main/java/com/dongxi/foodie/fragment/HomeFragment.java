@@ -1,5 +1,6 @@
 package com.dongxi.foodie.fragment;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
@@ -17,6 +18,7 @@ import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.dongxi.foodie.R;
+import com.dongxi.foodie.activity.FoodDetailActivity;
 import com.dongxi.foodie.adapter.BannerLoopPager;
 import com.dongxi.foodie.adapter.FoodAdapter;
 import com.dongxi.foodie.bean.Food;
@@ -69,7 +71,6 @@ public class HomeFragment extends Fragment {
         lv_food_list = (RecyclerView) view.findViewById(R.id.lv_food_list);
         pb_progress = (ProgressBar)view.findViewById(R.id.pb_progress);
 
-//        loop_view_pager = (RollPagerView) headerView.findViewById(R.id.loop_view_pager);
 
         //设置RecyclerView的格式
         linearLayoutManager = new LinearLayoutManager(UIUtils.getContext());
@@ -84,11 +85,22 @@ public class HomeFragment extends Fragment {
         foodAdapter.setOnItemClickListener(new FoodAdapter.OnRecyclerViewItemClickListener(){
             @Override
             public void onItemClick(View view, int position) {
-                Toast.makeText(UIUtils.getContext(),"Item "+position+" clicked",Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(UIUtils.getContext(), FoodDetailActivity.class) ;
+                //position-1 是因为headerView 占用了第一个position
+                String food_image = foodInfos.get(position-1).getImg() ;
+                String food_Material = foodInfos.get(position-1).getFood() ;
+                String food_Description = foodInfos.get(position-1).getDescription() ;
+
+                intent.putExtra("food_image",food_image) ;
+                intent.putExtra("food_Material",food_Material) ;
+                intent.putExtra("food_Description",food_Description) ;
+
+                startActivity(intent);
             }
 
             @Override
             public void onItemLongClick(View view, int position) {
+
             }
         });
 
@@ -108,7 +120,7 @@ public class HomeFragment extends Fragment {
         swipelayout.setColorSchemeResources(android.R.color.holo_blue_light,
                 android.R.color.holo_red_light,android.R.color.holo_orange_light,
                 android.R.color.holo_green_light);
-        // 这句话是为了，第一次进入页面的时候显示加载进度条
+        // 这句话是为了，第一次进入页面的时候显示加载进度条,第一个参数表示加载动画是否是缩放动画，true是false否
         swipelayout.setProgressViewOffset(false, 0, (int) TypedValue
                 .applyDimension(TypedValue.COMPLEX_UNIT_DIP, 24, getResources()
                         .getDisplayMetrics()));
@@ -176,6 +188,7 @@ public class HomeFragment extends Fragment {
         return view;
     }
 
+    //设置头布局
     private void setHeaderView(RecyclerView view){
         header = LayoutInflater.from(UIUtils.getContext()).inflate(R.layout.header_view, view, false);
 
@@ -193,6 +206,7 @@ public class HomeFragment extends Fragment {
         foodAdapter.setHeaderView(header);
     }
 
+    //设置脚布局
     private void setFooterView(RecyclerView view){
         View footer = LayoutInflater.from(UIUtils.getContext()).inflate(R.layout.layout_footer, view, false);
         foodAdapter.setFooterView(footer);
@@ -237,11 +251,14 @@ public class HomeFragment extends Fragment {
             for(int i=0;i<jsonArray.length();i++){
                 JSONObject jsonObj = jsonArray.getJSONObject(i);
                 int id=jsonObj.getInt("id");
-                String name = jsonObj.getString("name");
+                String name = jsonObj.getString("name");//菜名
                 String img=jsonObj.getString("img");
                 String count = jsonObj.getString("count");
+                String description = jsonObj.getString("description");
+                String food = jsonObj.getString("food");//食材
 
-                info = new Food(id, name,img,count);
+
+                info = new Food(id, name,img,count,description,food);
                 foodInfos.add(info);
             }
             return foodInfos;

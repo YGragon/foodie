@@ -134,7 +134,8 @@
             android:theme="@android:style/Theme.Translucent.NoTitleBar" />
         <activity android:name=".activity.VedioActivity" />
         <activity android:name=".activity.JokeActivity" />
-        <activity android:name=".activity.BeautyActivity"></activity>
+        <activity android:name=".activity.BeautyActivity" />
+        <activity android:name=".activity.FoodDetailActivity"></activity>
     </application>
 
 </manifest>
