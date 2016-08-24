@@ -135,7 +135,8 @@
         <activity android:name=".activity.VedioActivity" />
         <activity android:name=".activity.JokeActivity" />
         <activity android:name=".activity.BeautyActivity" />
-        <activity android:name=".activity.FoodDetailActivity"></activity>
+        <activity android:name=".activity.FoodDetailActivity" />
+        <activity android:name=".activity.KnownledgeDetailActivity"></activity>
     </application>
 
 </manifest>

@@ -61,10 +61,5 @@
         <item name="android:drawablePadding">16dp</item>
         <item name="android:textColor">@android:color/black</item>
     </style>
-    //TabLayout的字体
-    <style name="TabLayoutTextStyle">
-        <item name="android:textSize">20sp</item>
-    </style>
-
 
 </resources>

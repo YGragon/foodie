@@ -173,7 +173,6 @@ public class BeautyActivity extends AppCompatActivity {
      */
     private void getDataFromServer() {
         pb_progress.setVisibility(View.VISIBLE);
-        swipeLayout.setVisibility(View.GONE);
         //数据来自干活集中营
         RequestParams params = new RequestParams("http://gank.io/api/search/query/listview/" +
                 "category/%E7%A6%8F%E5%88%A9/count/" +

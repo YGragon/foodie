@@ -1,10 +1,10 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_margin="5dp"
-    tools:context="com.dongxi.foodie.fragment.HomeFragment">
+    tools:context=".fragment.HealthKnowledgeFragment">
+
     <ProgressBar
         android:id="@+id/pb_progress"
         android:layout_width="match_parent"
@@ -23,5 +23,4 @@
             android:layout_height="wrap_content" />
 
     </android.support.v4.widget.SwipeRefreshLayout>
-
 </FrameLayout>

@@ -160,7 +160,6 @@ public class VedioActivity extends AppCompatActivity {
      */
     private void getDataFromServer() {
         pb_progress.setVisibility(View.VISIBLE);
-        swipelayout.setVisibility(View.GONE);
         RequestParams params = new RequestParams("http://gank.io/api/search/query/" +
                 "listview/category/%E4%BC%91%E6%81%AF%E8%A7%86%E9%A2%91/count/" +
                 String.valueOf(pageSize)+"/page" + "/" +String.valueOf(page));

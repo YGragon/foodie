@@ -1,7 +1,6 @@
 package com.dongxi.foodie.fragment;
 
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.design.widget.Snackbar;
@@ -13,20 +12,14 @@ import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ProgressBar;
-import android.widget.Toast;
 
 import com.dongxi.foodie.R;
-import com.dongxi.foodie.activity.FoodDetailActivity;
-import com.dongxi.foodie.adapter.BannerLoopPager;
-import com.dongxi.foodie.adapter.FoodAdapter;
-import com.dongxi.foodie.bean.Food;
+import com.dongxi.foodie.activity.KnownledgeDetailActivity;
+import com.dongxi.foodie.adapter.KnownledgeAdapter;
+import com.dongxi.foodie.bean.KnownledgeInfo;
 import com.dongxi.foodie.utils.UIUtils;
 import com.dongxi.foodie.view.DividerItemDecoration;
-import com.jude.rollviewpager.OnItemClickListener;
-import com.jude.rollviewpager.RollPagerView;
-import com.jude.rollviewpager.hintview.ColorPointHintView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -39,61 +32,52 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class HomeFragment extends Fragment {
-
-//    private Food food;
-    private Food info;
+public class HealthKnowledgeFragment extends Fragment {
+    private KnownledgeInfo knownledgeInfo;
 
     private SwipeRefreshLayout swipelayout ;
-    private Button btn_convenience;
 
-    private RecyclerView lv_food_list;
+    private RecyclerView recyclerView_Knownledge;
     private ProgressBar pb_progress;
     private LinearLayoutManager linearLayoutManager;
-    List<Food> foodInfos = new ArrayList<Food>();//声明全局的才有效果
-    private FoodAdapter foodAdapter;
+    List<KnownledgeInfo> knownledgeInfos = new ArrayList<KnownledgeInfo>();//声明全局的才有效果
+    private KnownledgeAdapter knownledgeAdapter;
     private int lastVisibleItem;
     private int pageSize = 30;
     private int page = 1;
-    private RollPagerView loop_view_pager;
-    private BannerLoopPager bannerLoopPager ;
-    private View header;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_home, container, false);
-//        View headerView = inflater.inflate(R.layout.header_view,container,false);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment_health_knownledge, container, false);
         x.view().inject(this,view);
-//        x.view().inject(this,headerView) ;
 
         //ListView的布局设置
         swipelayout = (SwipeRefreshLayout)view.findViewById(R.id.swipelayout);
-        lv_food_list = (RecyclerView) view.findViewById(R.id.lv_food_list);
+        recyclerView_Knownledge = (RecyclerView) view.findViewById(R.id.recyclerView_Knownledge);
         pb_progress = (ProgressBar)view.findViewById(R.id.pb_progress);
 
 
         //设置RecyclerView的格式
         linearLayoutManager = new LinearLayoutManager(UIUtils.getContext());
-        lv_food_list.setLayoutManager(linearLayoutManager);
+        recyclerView_Knownledge.setLayoutManager(linearLayoutManager);
 
-        foodAdapter = new FoodAdapter(foodInfos);
-        lv_food_list.setAdapter(foodAdapter);
+        knownledgeAdapter = new KnownledgeAdapter(knownledgeInfos);
+        recyclerView_Knownledge.setAdapter(knownledgeAdapter);
 
 
 
         //RecyclerView的item点击事件
-        foodAdapter.setOnItemClickListener(new FoodAdapter.OnRecyclerViewItemClickListener(){
+        knownledgeAdapter.setOnItemClickListener(new KnownledgeAdapter.OnRecyclerViewItemClickListener(){
             @Override
             public void onItemClick(View view, int position) {
-                Intent intent = new Intent(UIUtils.getContext(), FoodDetailActivity.class) ;
+                Intent intent = new Intent(UIUtils.getContext(), KnownledgeDetailActivity.class) ;
                 //position-1 是因为headerView 占用了第一个position
-                String food_image = foodInfos.get(position-1).getImg() ;
-                String food_Material = foodInfos.get(position-1).getFood() ;
-                String food_Description = foodInfos.get(position-1).getDescription() ;
+                String knownledge_image = knownledgeInfos.get(position).getImg() ;
+                String knownledge_Desc = knownledgeInfos.get(position).getDescription() ;
 
-                intent.putExtra("food_image",food_image) ;
-                intent.putExtra("food_Material",food_Material) ;
-                intent.putExtra("food_Description",food_Description) ;
+                intent.putExtra("knownledge_image",knownledge_image) ;
+                intent.putExtra("knownledge_Description",knownledge_Desc) ;
 
                 startActivity(intent);
             }
@@ -103,16 +87,11 @@ public class HomeFragment extends Fragment {
 
             }
         });
-
-        //为RecyclerView添加HeaderView和FooterView
-        setHeaderView(lv_food_list);
-        setFooterView(lv_food_list);
-
-        //配置RecyclerView 可以提高执行效率, 前提你要知道有多少不变的item
-        lv_food_list.setHasFixedSize(true);
+//配置RecyclerView 可以提高执行效率, 前提你要知道有多少不变的item
+        recyclerView_Knownledge.setHasFixedSize(true);
 
         //设置item之间的间隔,分割线等
-        lv_food_list.addItemDecoration(new DividerItemDecoration(UIUtils.getContext(),
+        recyclerView_Knownledge.addItemDecoration(new DividerItemDecoration(UIUtils.getContext(),
                 DividerItemDecoration.VERTICAL_LIST));
         //设置进度条的背景颜色主题
         swipelayout.setProgressBackgroundColorSchemeResource(android.R.color.white);
@@ -134,21 +113,21 @@ public class HomeFragment extends Fragment {
                     public void run() {
                         page++;
                         swipelayout.setRefreshing(false);
-                        foodAdapter.notifyDataSetChanged();
+                        knownledgeAdapter.notifyDataSetChanged();
                         Snackbar.make(swipelayout,"刷新成功",Snackbar.LENGTH_LONG).show();
                     }
                 }, 2000);
             }
         });
         //滑动监听
-        lv_food_list.setOnScrollListener(new RecyclerView.OnScrollListener() {
+        recyclerView_Knownledge.setOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(RecyclerView recyclerView,
                                              int newState) {
                 super.onScrollStateChanged(recyclerView, newState);
 
                 if (newState == RecyclerView.SCROLL_STATE_IDLE
-                        && lastVisibleItem + 1 == foodAdapter.getItemCount()) {
+                        && lastVisibleItem + 1 == knownledgeAdapter.getItemCount()) {
                     swipelayout.setRefreshing(true);
                     // 此处在现实项目中，请换成网络请求数据代码，sendRequest .....
                     getDataFromServer();
@@ -157,7 +136,7 @@ public class HomeFragment extends Fragment {
                         public void run() {
                             page++;
                             swipelayout.setRefreshing(false);
-                            foodAdapter.notifyDataSetChanged();
+                            knownledgeAdapter.notifyDataSetChanged();
                             Snackbar.make(swipelayout,"刷新成功",Snackbar.LENGTH_LONG).show();
                         }
                     }, 2000);
@@ -171,53 +150,16 @@ public class HomeFragment extends Fragment {
         });
         getDataFromServer() ;
 
-        //设置播放时间间隔
-//        mRollViewPager.setPlayDelay(3000);
-//        //设置透明度
-//        mRollViewPager.setAnimationDurtion(500);
-//        //设置适配器
-//        mRollViewPager.setAdapter(new HeaderAdapter());
-//        mRollViewPager.setHintView(new ColorPointHintView(getActivity(), Color.YELLOW, Color.WHITE));
-//        //Item的点击事件
-//        mRollViewPager.setOnItemClickListener(new OnItemClickListener() {
-//            @Override
-//            public void onItemClick(int position) {
-//                Toast.makeText(UIUtils.getContext(),"Item "+position+" clicked",Toast.LENGTH_SHORT).show();
-//            }
-//        });
-        return view;
-    }
 
-    //设置头布局
-    private void setHeaderView(RecyclerView view){
-        header = LayoutInflater.from(UIUtils.getContext()).inflate(R.layout.header_view, view, false);
-
-        loop_view_pager =  (RollPagerView)header.findViewById(R.id.loop_view_pager) ;
-        bannerLoopPager = new BannerLoopPager();
-        loop_view_pager.setAdapter(bannerLoopPager);
-        loop_view_pager.setHintView(new ColorPointHintView(UIUtils.getContext(), Color.YELLOW, Color.WHITE));
-        //mRollViewPager.setHintView(null);
-        loop_view_pager.setOnItemClickListener(new OnItemClickListener() {
-            @Override
-            public void onItemClick(int position) {
-                Toast.makeText(UIUtils.getContext(),"Item "+position+" clicked",Toast.LENGTH_SHORT).show();
-            }
-        });
-        foodAdapter.setHeaderView(header);
-    }
-
-    //设置脚布局
-    private void setFooterView(RecyclerView view){
-        View footer = LayoutInflater.from(UIUtils.getContext()).inflate(R.layout.layout_footer, view, false);
-        foodAdapter.setFooterView(footer);
+        return view ;
     }
     /**
      * 从服务器获取数据
      */
     private void getDataFromServer() {
         pb_progress.setVisibility(View.VISIBLE);
-        RequestParams params = new RequestParams("http://www.tngou.net/api/cook/" +
-                "list?page="+String.valueOf(page)+"&id=2&rows="+String.valueOf(pageSize));
+        RequestParams params = new RequestParams("http://www.tngou.net/api/lore/" +
+                "list?page="+String.valueOf(page)+"&rows="+String.valueOf(pageSize));
         //params.setSslSocketFactory(...); // 设置ssl
         params.addQueryStringParameter("wd", "xUtils");
         x.http().get(params,new Callback.CommonCallback<String>(){
@@ -242,25 +184,23 @@ public class HomeFragment extends Fragment {
      * 解析网络数据
      * @param result
      */
-    public List<Food> parseData(String result) {
-
+    public List<KnownledgeInfo> parseData(String result) {
         try {
             JSONObject jsonObject=new JSONObject(result);
             JSONArray jsonArray = jsonObject.getJSONArray("tngou");
             for(int i=0;i<jsonArray.length();i++){
                 JSONObject jsonObj = jsonArray.getJSONObject(i);
                 int id=jsonObj.getInt("id");
-                String name = jsonObj.getString("name");//菜名
+                String title = jsonObj.getString("title");//菜名
                 String img=jsonObj.getString("img");
-                String count = jsonObj.getString("count");
+                int count=jsonObj.getInt("count");
                 String description = jsonObj.getString("description");
-                String food = jsonObj.getString("food");//食材
 
 
-                info = new Food(id, name,img,count,description,food);
-                foodInfos.add(info);
+                knownledgeInfo = new KnownledgeInfo(count, description,id,img,title);
+                knownledgeInfos.add(knownledgeInfo);
             }
-            return foodInfos;
+            return knownledgeInfos;
 
         } catch (JSONException e) {
             e.printStackTrace();
@@ -268,4 +208,3 @@ public class HomeFragment extends Fragment {
         }
     }
 }
-

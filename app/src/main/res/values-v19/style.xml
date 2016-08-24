@@ -4,4 +4,5 @@
     <style name="Theme" parent="@style/AppTheme">
         <item name="android:windowTranslucentStatus">true</item>
     </style>
+
 </resources>

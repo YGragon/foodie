@@ -3,8 +3,9 @@ package com.dongxi.foodie.activity;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.support.v7.app.AppCompatActivity;
+import android.net.Uri;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
@@ -22,13 +23,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.dongxi.foodie.R;
+import com.dongxi.foodie.bean.Food;
 import com.jaeger.library.StatusBarUtil;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import butterknife.ButterKnife;
-import butterknife.OnClick;
 
 
 public class Searchctivity extends AppCompatActivity implements View.OnClickListener {
@@ -40,6 +39,8 @@ public class Searchctivity extends AppCompatActivity implements View.OnClickList
     private TextView mOperationTv;
     private String mType;
 
+    List<Food> foodInfos = new ArrayList<Food>();//声明全局的才有效果
+    private Food info;
 
     private ArrayAdapter<String> mArrAdapter;
     private SharedPreferences mPref;
@@ -67,15 +68,28 @@ public class Searchctivity extends AppCompatActivity implements View.OnClickList
 
         ImageView iv_search = (ImageView)findViewById(R.id.iv_search);
         ImageView iv_scan = (ImageView)findViewById(R.id.iv_scan);
+        //输入框的监听
+        mKeywordEt = (EditText) findViewById(R.id.et_input);
 
         //搜索的点击
         iv_search.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 if (mKeywordEt.getText().length() > 0) {
                     save();
+                    String inputText = mKeywordEt.getText().toString() ;
+//                    http://www.tngou.net/api/search?keyword="+inputText+"&name=info
+                    String uriStr = "https://www.baidu.com/s?wd="+inputText+"&rsv_spt=1&rsv_iqid=0xf7bcd045000756be" +
+                            "&issp=1&f=8&rsv_bp=0&rsv_idx=2&ie=utf-8" +
+                            "&tn=baiduhome_pg&rsv_enter=1&rsv_sug3=12" +
+                            "&rsv_sug1=9&rsv_sug7=100&rsv_t=0d45nHswktgyZdj3RcAe7TJtzERY1GAWl3T7lQEr8IfTj3%2BGdlsXtORaKUeZUM9GvMm3";
+                    Intent intent = new Intent(Intent.ACTION_VIEW,
+                            ( Uri.parse(uriStr))
+                    ).addCategory(Intent.CATEGORY_BROWSABLE)
+                            .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    startActivity(intent);
                     Toast.makeText(Searchctivity.this,"正在搜索"+mKeywordEt.getText().toString(),Toast.LENGTH_LONG).show();
+
                 } else {
                     finish();
                 }
@@ -91,8 +105,7 @@ public class Searchctivity extends AppCompatActivity implements View.OnClickList
             }
         });
 
-        //输入框的监听
-        mKeywordEt = (EditText) findViewById(R.id.et_input);
+
 
         mKeywordEt.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
@@ -219,5 +232,4 @@ public class Searchctivity extends AppCompatActivity implements View.OnClickList
     protected void setStatusBar() {
         StatusBarUtil.setColor(this, getResources().getColor(R.color.colorPrimary));
     }
-
 }
