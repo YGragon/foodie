@@ -1,6 +1,7 @@
 package com.dongxi.foodie.adapter;
 
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,7 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.dongxi.foodie.R;
-import com.dongxi.foodie.bean.QuestionInfo;
+import com.dongxi.foodie.bean.NewsInfo;
 
 import org.xutils.x;
 
@@ -18,11 +19,12 @@ import java.util.Date;
 import java.util.List;
 
 /**
- * Created by Administrator on 2016/8/24.
+ * Created by Administrator on 2016/8/25.
  */
-public class QuestionAdapter extends RecyclerView.Adapter<QuestionAdapter.QuestionView> {
-    private List<QuestionInfo> questionList = new ArrayList<QuestionInfo>();
-    private QuestionInfo questionInfo;
+public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewsView> {
+
+    private List<NewsInfo> newsList = new ArrayList<NewsInfo>();
+    private NewsInfo newsInfo;
     private OnRecyclerViewItemClickListener mOnItemClickListener = null;
 
 
@@ -32,28 +34,29 @@ public class QuestionAdapter extends RecyclerView.Adapter<QuestionAdapter.Questi
         void onItemLongClick(View view, int position);
     }
 
-    public QuestionAdapter(List<QuestionInfo> list) {
-        questionList = list;
-    }
-    @Override
-    public QuestionView onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_question_item,parent,false) ;
-        return new QuestionView(view);
+    public NewsAdapter(List<NewsInfo> list) {
+        newsList = list;
     }
 
     @Override
-    public void onBindViewHolder(final QuestionAdapter.QuestionView holder, int position) {
-        questionInfo = questionList.get(position);
-        holder.tv_question_title.setText(questionInfo.getTitle());// 设置问答的标题
-        holder.tv_question_count.setText("热度：" + questionInfo.getCount() + " %");
+    public NewsView onCreateViewHolder(ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_news_item,parent,false) ;
+        return new NewsView(view);
+    }
+
+    @Override
+    public void onBindViewHolder(final NewsAdapter.NewsView holder, int position) {
+        newsInfo = newsList.get(position);
+        holder.tv_news_title.setText(newsInfo.getTitle());// 设置问答的标题
+        holder.tv_news_count.setText("热度：" + newsInfo.getCount() + " %");
         // 设置问答的时间
-        long time = questionInfo.getTime() ;
+        long time = newsInfo.getTime() ;
         Date date = new Date(time);
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd E HH:mm");
-        holder.tv_question_time.setText(simpleDateFormat.format(date));
+        holder.tv_news_time.setText(simpleDateFormat.format(date));
 
-        String iconUrl = "http://tnfs.tngou.net/img" + questionInfo.getImg();
-        x.image().bind(holder.iv_question,iconUrl);
+        String iconUrl = "http://tnfs.tngou.net/img" + newsInfo.getImg();
+        x.image().bind(holder.iv_news,iconUrl);
 
         // 如果设置了回调，则设置点击事件
         if (mOnItemClickListener != null)
@@ -87,20 +90,17 @@ public class QuestionAdapter extends RecyclerView.Adapter<QuestionAdapter.Questi
     }
     @Override
     public int getItemCount() {
-        return questionList.size();
+        return newsList.size();
     }
-
-    public class QuestionView extends RecyclerView.ViewHolder {
-
-        ImageView iv_question;
-        TextView tv_question_title, tv_question_count,tv_question_time;
-        public QuestionView(View itemView) {
-            super(itemView);
-            iv_question = (ImageView) itemView.findViewById(R.id.iv_question);
-            tv_question_title = (TextView) itemView.findViewById(R.id.tv_question_title);
-            tv_question_count = (TextView) itemView.findViewById(R.id.tv_question_count);
-            tv_question_time = (TextView) itemView.findViewById(R.id.tv_question_time);
-
+    public class NewsView extends RecyclerView.ViewHolder {
+    ImageView iv_news;
+    TextView tv_news_title, tv_news_count,tv_news_time;
+    public NewsView(View itemView) {
+        super(itemView);
+        iv_news = (ImageView) itemView.findViewById(R.id.iv_news);
+        tv_news_title = (TextView) itemView.findViewById(R.id.tv_news_title);
+        tv_news_count = (TextView) itemView.findViewById(R.id.tv_news_count);
+        tv_news_time = (TextView) itemView.findViewById(R.id.tv_news_time);
         }
     }
 }

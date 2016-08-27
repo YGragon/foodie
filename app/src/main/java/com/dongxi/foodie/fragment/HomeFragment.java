@@ -171,20 +171,6 @@ public class HomeFragment extends Fragment {
         });
         getDataFromServer() ;
 
-        //设置播放时间间隔
-//        mRollViewPager.setPlayDelay(3000);
-//        //设置透明度
-//        mRollViewPager.setAnimationDurtion(500);
-//        //设置适配器
-//        mRollViewPager.setAdapter(new HeaderAdapter());
-//        mRollViewPager.setHintView(new ColorPointHintView(getActivity(), Color.YELLOW, Color.WHITE));
-//        //Item的点击事件
-//        mRollViewPager.setOnItemClickListener(new OnItemClickListener() {
-//            @Override
-//            public void onItemClick(int position) {
-//                Toast.makeText(UIUtils.getContext(),"Item "+position+" clicked",Toast.LENGTH_SHORT).show();
-//            }
-//        });
         return view;
     }
 

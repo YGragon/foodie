@@ -15,7 +15,7 @@ import android.view.ViewGroup;
 import android.widget.ProgressBar;
 
 import com.dongxi.foodie.R;
-import com.dongxi.foodie.activity.KnownledgeDetailActivity;
+import com.dongxi.foodie.activity.QuestionDetailActivity;
 import com.dongxi.foodie.adapter.QuestionAdapter;
 import com.dongxi.foodie.bean.QuestionInfo;
 import com.dongxi.foodie.utils.UIUtils;
@@ -70,10 +70,12 @@ public class HealthQuestionFragment extends Fragment {
         questionAdapter.setOnItemClickListener(new QuestionAdapter.OnRecyclerViewItemClickListener(){
             @Override
             public void onItemClick(View view, int position) {
-                Intent intent = new Intent(UIUtils.getContext(), KnownledgeDetailActivity.class) ;
+                Intent intent = new Intent(UIUtils.getContext(), QuestionDetailActivity.class) ;
+                String question_image = questionInfos.get(position).getImg() ;
                 String question_title = questionInfos.get(position).getTitle() ;
                 String question_Desc = questionInfos.get(position).getDescription() ;
 
+                intent.putExtra("question_image",question_image) ;
                 intent.putExtra("question_title",question_title) ;
                 intent.putExtra("question_Desc",question_Desc) ;
 
@@ -128,11 +130,12 @@ public class HealthQuestionFragment extends Fragment {
                         && lastVisibleItem + 1 == questionAdapter.getItemCount()) {
                     swipelayout.setRefreshing(true);
                     // 此处在现实项目中，请换成网络请求数据代码，sendRequest .....
-                    getDataFromServer();
+
                     new Handler().postDelayed(new Runnable() {
                         @Override
                         public void run() {
                             page++;
+                            getDataFromServer();
                             swipelayout.setRefreshing(false);
                             questionAdapter.notifyDataSetChanged();
                             Snackbar.make(swipelayout,"刷新成功",Snackbar.LENGTH_LONG).show();
@@ -156,8 +159,8 @@ public class HealthQuestionFragment extends Fragment {
      */
     private void getDataFromServer() {
         pb_progress.setVisibility(View.VISIBLE);
-        RequestParams params = new RequestParams("http://www.tngou.net/api/info/" +
-                "news?id=0&page="+String.valueOf(page)+"&rows="+String.valueOf(pageSize)+"&classify=1");
+        RequestParams params = new RequestParams("http://www.tngou.net/api/ask/" +
+                "list?page="+String.valueOf(page)+"&rows="+String.valueOf(pageSize));
         //params.setSslSocketFactory(...); // 设置ssl
         params.addQueryStringParameter("wd", "xUtils");
         x.http().get(params,new Callback.CommonCallback<String>(){
