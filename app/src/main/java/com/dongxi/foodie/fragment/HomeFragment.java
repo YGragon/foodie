@@ -62,14 +62,11 @@ public class HomeFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_home, container, false);
-//        View headerView = inflater.inflate(R.layout.header_view,container,false);
         x.view().inject(this,view);
-//        x.view().inject(this,headerView) ;
 
         //ListView的布局设置
         swipelayout = (SwipeRefreshLayout)view.findViewById(R.id.swipelayout);
         lv_food_list = (RecyclerView) view.findViewById(R.id.lv_food_list);
-        pb_progress = (ProgressBar)view.findViewById(R.id.pb_progress);
 
 
         //设置RecyclerView的格式
@@ -78,8 +75,6 @@ public class HomeFragment extends Fragment {
 
         foodAdapter = new FoodAdapter(foodInfos);
         lv_food_list.setAdapter(foodAdapter);
-
-
 
         //RecyclerView的item点击事件
         foodAdapter.setOnItemClickListener(new FoodAdapter.OnRecyclerViewItemClickListener(){
@@ -132,9 +127,10 @@ public class HomeFragment extends Fragment {
                 new Handler().postDelayed(new Runnable() {
                     @Override
                     public void run() {
+                        foodInfos.add(0, info);//在头部加入数据
                         page++;
-                        swipelayout.setRefreshing(false);
                         foodAdapter.notifyDataSetChanged();
+                        swipelayout.setRefreshing(false);//刷新
                         Snackbar.make(swipelayout,"刷新成功",Snackbar.LENGTH_LONG).show();
                     }
                 }, 2000);
@@ -201,7 +197,6 @@ public class HomeFragment extends Fragment {
      * 从服务器获取数据
      */
     private void getDataFromServer() {
-        pb_progress.setVisibility(View.VISIBLE);
         RequestParams params = new RequestParams("http://www.tngou.net/api/cook/" +
                 "list?page="+String.valueOf(page)+"&id=2&rows="+String.valueOf(pageSize));
         //params.setSslSocketFactory(...); // 设置ssl
@@ -210,6 +205,7 @@ public class HomeFragment extends Fragment {
             @Override
             public void onSuccess(String result) {
                 parseData(result);//解析数据
+                foodAdapter.notifyDataSetChanged();
             }
             @Override
             public void onError(Throwable ex, boolean isOnCallback) {
@@ -219,7 +215,6 @@ public class HomeFragment extends Fragment {
             }
             @Override
             public void onFinished() {
-                pb_progress.setVisibility(View.GONE);
                 swipelayout.setVisibility(View.VISIBLE);
             }
         });

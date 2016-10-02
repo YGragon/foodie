@@ -25,6 +25,12 @@
         <item name="android:gravity">center</item>
         <item name="android:textSize">22sp</item>
     </style>
+    //进度条样式
+    <style name="CustomToolbarTheme" parent="Base.ThemeOverlay.AppCompat.ActionBar">
+        <item name="android:background">@color/colorPrimary</item>
+        <item name="android:textColorPrimary">@color/white</item>
+        <item name="actionMenuTextColor">@color/white</item>
+    </style>
 
     //底部样式
     <style name="BottomTabStyle">

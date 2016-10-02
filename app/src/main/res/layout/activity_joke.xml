@@ -3,38 +3,62 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_margin="5dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context="com.dongxi.foodie.activity.JokeActivity">
 
-    <!--<ListView-->
-        <!--android:id="@+id/lv_joke"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="match_parent">-->
-    <!--</ListView>-->
-    <!--<ProgressBar-->
-        <!--android:id="@+id/pb_progress"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="match_parent"-->
-        <!--android:layout_gravity="center"-->
-        <!--android:indeterminateDrawable="@drawable/custom_progress" />-->
-
-    <ProgressBar
-        android:id="@+id/pb_progress"
+    <com.nguyenhoanglam.progresslayout.ProgressLayout
+        android:id="@+id/progressLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_gravity="center"
-        android:indeterminateDrawable="@drawable/custom_progress" />
+        app:emptyContentTextColor="@color/grey"
+        app:emptyContentTextSize="14sp"
+        app:emptyImageHeight="200dp"
+        app:emptyImageWidth="200dp"
+        app:errorButtonTextColor="@color/teal"
+        app:errorButtonTextSize="14sp"
+        app:errorContentTextColor="@color/grey"
+        app:errorContentTextSize="14sp"
+        app:errorImageHeight="200dp"
+        app:errorImageWidth="200dp"
+        app:loadingProgressBarColor="@color/teal"
+        app:loadingProgressBarRadius="200dp"
+        app:loadingProgressBarSpinWidth="10dp">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:layout_alignParentTop="true"
+            android:background="@color/colorPrimary"
+            app:theme="@style/CustomToolbarTheme" />
+        <ProgressBar
+            android:id="@+id/pb_progress"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:indeterminateDrawable="@drawable/custom_progress" />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@id/toolbar"
+            android:layout_centerInParent="true"
+            android:visibility="gone"
+            android:gravity="center"
+            android:text="YOUR CONTENT HERE"
+            android:textSize="24sp" />
+    </com.nguyenhoanglam.progresslayout.ProgressLayout>
     <android.support.v4.widget.SwipeRefreshLayout
         android:id="@+id/swipe_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
+        android:visibility="gone"
         >
         <android.support.v7.widget.RecyclerView
             android:id="@+id/lv_joke"
+            android:layout_margin="5dp"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
-
     </android.support.v4.widget.SwipeRefreshLayout>
 
 </RelativeLayout>

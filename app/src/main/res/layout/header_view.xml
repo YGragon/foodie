@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:kevin="http://schemas.android.com/tools">
+    >
 
     <!--ViewPager 热门图片展示-->
     <com.jude.rollviewpager.RollPagerView

@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     tools:context="com.dongxi.foodie.activity.NewsDetailActivity">
 
@@ -44,16 +45,12 @@
             android:layout_height="0dp"
             android:layout_weight="1" >
 
-            <WebView
-                android:id="@+id/wv_web"
+            <com.dongxi.foodie.view.ProgressWebView
+                android:id="@+id/webview"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" />
-
-            <ProgressBar
-                android:id="@+id/pb_progress"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_gravity="center"
-                android:indeterminateDrawable="@drawable/custom_progress" />
+
+                />
         </FrameLayout>
 </LinearLayout>

@@ -3,18 +3,22 @@ package com.dongxi.foodie.activity;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.design.widget.Snackbar;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.util.TypedValue;
 import android.view.View;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import com.dongxi.foodie.R;
 import com.dongxi.foodie.adapter.JokeAdapter;
 import com.dongxi.foodie.bean.JokeInfo;
 import com.dongxi.foodie.view.DividerItemDecoration;
+import com.nguyenhoanglam.progresslayout.ProgressLayout;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -37,8 +41,10 @@ public class JokeActivity extends AppCompatActivity {
 
     private LinearLayoutManager linearLayoutManager;
     private int lastVisibleItem;
-    private int pageSize = 30;
+    private int pageSize = 10;
     private int page = 0;
+    private List<Integer> skipIds;
+    private ProgressLayout progressLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,12 +53,20 @@ public class JokeActivity extends AppCompatActivity {
 
         swipelayout = (SwipeRefreshLayout) findViewById(R.id.swipe_layout);
         lv_joke = (RecyclerView) findViewById(R.id.lv_joke);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar.setTitle("看个段子");
+        progressLayout = (ProgressLayout) findViewById(R.id.progressLayout);
         pb_progress = (ProgressBar) findViewById(R.id.pb_progress);
+
+
 
         linearLayoutManager = new LinearLayoutManager(this);
         lv_joke.setLayoutManager(linearLayoutManager);
         //设置adapter
         jokeAdapter = new JokeAdapter(jokeInfos);
+        if (jokeAdapter==null){
+            progressLayout.showEmpty(ContextCompat.getDrawable(JokeActivity.this, R.drawable.ic_empty), "Empty data",skipIds);
+        }
         lv_joke.setAdapter(jokeAdapter);
 
         //配置RecyclerView 可以提高执行效率, 前提你要知道有多少不变的item
@@ -122,6 +136,12 @@ public class JokeActivity extends AppCompatActivity {
             }
         });
 
+
+        skipIds = new ArrayList<>();
+        skipIds.add(R.id.toolbar);
+        skipIds.add(R.id.pb_progress);
+        progressLayout.showLoading(skipIds);
+
         getDataFromServer();
 
     }
@@ -140,14 +160,22 @@ public class JokeActivity extends AppCompatActivity {
             @Override
             public void onSuccess(String result) {
                 parseData(result);//解析数据
+                jokeAdapter.notifyDataSetChanged();
             }
 
             @Override
             public void onError(Throwable ex, boolean isOnCallback) {
+                progressLayout.showError(ContextCompat.getDrawable(JokeActivity.this, R.drawable.ic_no_connection), "No connection", "RETRY", new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Toast.makeText(JokeActivity.this, "Reloading...", Toast.LENGTH_SHORT).show();
+                    }
+                }, skipIds);
             }
 
             @Override
             public void onCancelled(CancelledException cex) {
+                progressLayout.showEmpty(ContextCompat.getDrawable(JokeActivity.this, R.drawable.ic_empty), "Empty data",skipIds);
             }
 
             @Override

@@ -109,7 +109,7 @@
             style="@style/item"
             android:id="@+id/tv_about"
             android:background="@drawable/preference_single_normal"
-            android:text="@string/about"
+            android:text="关于作者"
             android:textSize="18dp"
             android:paddingTop="15dp"
             android:clickable="true"

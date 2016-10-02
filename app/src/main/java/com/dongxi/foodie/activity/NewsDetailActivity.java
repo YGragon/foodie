@@ -2,19 +2,15 @@ package com.dongxi.foodie.activity;
 
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.Window;
-import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
-import android.webkit.WebViewClient;
 import android.widget.ImageButton;
-import android.widget.ProgressBar;
 
 import com.dongxi.foodie.R;
 import com.jaeger.library.StatusBarUtil;
@@ -27,7 +23,6 @@ public class NewsDetailActivity extends AppCompatActivity  implements View.OnCli
     private ImageButton btnBack;
     private ImageButton btnShare;
     private ImageButton btnSize;
-    private ProgressBar pbProgress;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,7 +35,7 @@ public class NewsDetailActivity extends AppCompatActivity  implements View.OnCli
         Intent intent = getIntent() ;
         int news_id = intent.getExtras().getInt("news_id");
 
-        mWebView = (WebView) findViewById(R.id.wv_web);
+        mWebView = (WebView) findViewById(R.id.webview);
         btnBack = (ImageButton) findViewById(R.id.btn_back);
         btnSize = (ImageButton) findViewById(R.id.btn_size);
         btnShare = (ImageButton) findViewById(R.id.btn_share);
@@ -49,74 +44,50 @@ public class NewsDetailActivity extends AppCompatActivity  implements View.OnCli
         btnSize.setOnClickListener(this);
         btnShare.setOnClickListener(this);
 
-        pbProgress = (ProgressBar) findViewById(R.id.pb_progress);
-
         String url ="http://www.tngou.net/info/show/"+ news_id;
 
-        Log.w("网址是：",url) ;
         WebSettings settings = mWebView.getSettings();
         settings.setJavaScriptEnabled(true);// 表示支持js
         settings.setBuiltInZoomControls(true);// 显示放大缩小按钮
         settings.setUseWideViewPort(true);// 支持双击缩放
 
-        mWebView.setWebViewClient(new WebViewClient() {
-
-            /**
-             * 网页开始加载
-             */
-            @Override
-            public void onPageStarted(WebView view, String url, Bitmap favicon) {
-                super.onPageStarted(view, url, favicon);
-                System.out.println("网页开始加载");
-                pbProgress.setVisibility(View.VISIBLE);
-            }
-
-            /**
-             * 网页加载结束
-             */
-            @Override
-            public void onPageFinished(WebView view, String url) {
-                super.onPageFinished(view, url);
-                System.out.println("网页开始结束");
-
-                pbProgress.setVisibility(View.GONE);
-            }
-
-            /**
-             * 所有跳转的链接都会在此方法中回调
-             */
-            @Override
-            public boolean shouldOverrideUrlLoading(WebView view, String url) {
-                // tel:110
-                System.out.println("跳转url:" + url);
-                view.loadUrl(url);
-
-                return true;
-            }
-        });
+//        mWebView.setWebViewClient(new WebViewClient() {
+//
+//            /**
+//             * 网页开始加载
+//             */
+//            @Override
+//            public void onPageStarted(WebView view, String url, Bitmap favicon) {
+//                super.onPageStarted(view, url, favicon);
+//                progressLayout.setVisibility(View.VISIBLE);
+//            }
+//
+//            /**
+//             * 网页加载结束
+//             */
+//            @Override
+//            public void onPageFinished(WebView view, String url) {
+//                super.onPageFinished(view, url);
+//                progressLayout.setVisibility(View.GONE);
+//                mWebView.setVisibility(View.VISIBLE);
+//            }
+//
+//            @Override
+//            public void onReceivedError(WebView view, WebResourceRequest request, WebResourceError error) {
+//                super.onReceivedError(view, request, error);
+//                progressLayout.setVisibility(View.GONE);
+//            }
+//
+//            /**
+//             * 所有跳转的链接都会在此方法中回调
+//             */
+//            @Override
+//            public boolean shouldOverrideUrlLoading(WebView view, String url) {
+//                view.loadUrl(url);
+//                return true;
+//            }
+//        });
         // mWebView.goBack()
-
-        mWebView.setWebChromeClient(new WebChromeClient() {
-
-            /**
-             * 进度发生变化
-             */
-            @Override
-            public void onProgressChanged(WebView view, int newProgress) {
-                System.out.println("加载进度:" + newProgress);
-                super.onProgressChanged(view, newProgress);
-            }
-
-            /**
-             * 获取网页标题
-             */
-            @Override
-            public void onReceivedTitle(WebView view, String title) {
-                System.out.println("网页标题:" + title);
-                super.onReceivedTitle(view, title);
-            }
-        });
-
         mWebView.loadUrl(url);// 加载网页
     }
     //沉浸式状态栏
@@ -224,10 +195,23 @@ public class NewsDetailActivity extends AppCompatActivity  implements View.OnCli
         oks.setComment("我是测试评论文本");
         // site是分享此内容的网站名称，仅在QQ空间使用
         oks.setSite(getString(R.string.app_name));
-        // siteUrl是分享此内容的网站地址，仅在QQ空间使用
         oks.setSiteUrl("http://dongxi520.com/");
 
 // 启动分享GUI
         oks.show(this);
+    }
+
+    /**
+     * 返回网页的上一页
+     * @param keyCode
+     * @param event
+     * @return
+     */
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode==KeyEvent.KEYCODE_BACK&&mWebView.canGoBack()){
+            mWebView.goBack();
+        }
+        return super.onKeyDown(keyCode, event);
     }
 }

@@ -167,6 +167,7 @@ public class HealthQuestionFragment extends Fragment {
             @Override
             public void onSuccess(String result) {
                 parseData(result);//解析数据
+                questionAdapter.notifyDataSetChanged();
             }
             @Override
             public void onError(Throwable ex, boolean isOnCallback) {

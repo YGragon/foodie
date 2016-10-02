@@ -5,10 +5,12 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.design.widget.Snackbar;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.util.TypedValue;
 import android.view.View;
 import android.widget.ProgressBar;
@@ -19,6 +21,7 @@ import com.dongxi.foodie.adapter.VedioAdapter;
 import com.dongxi.foodie.adapter.VedioAdapter.OnRecyclerViewItemClickListener;
 import com.dongxi.foodie.bean.VedioInfo;
 import com.dongxi.foodie.view.DividerItemDecoration;
+import com.nguyenhoanglam.progresslayout.ProgressLayout;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -46,8 +49,10 @@ public class VedioActivity extends AppCompatActivity {
 
     private LinearLayoutManager linearLayoutManager;
     private int lastVisibleItem;
-    private int pageSize = 30;
+    private int pageSize = 20;
     private int page = 1;
+    private ProgressLayout progressLayout;
+    private List<Integer> skipIds;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,6 +61,10 @@ public class VedioActivity extends AppCompatActivity {
 
         swipelayout = (SwipeRefreshLayout) findViewById(R.id.swipe_layout);
         rl_vedio = (RecyclerView) findViewById(R.id.rl_vedio);
+
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar.setTitle("看个视频");
+        progressLayout = (ProgressLayout) findViewById(R.id.progressLayout);
         pb_progress = (ProgressBar) findViewById(R.id.pb_progress);
 
         linearLayoutManager = new LinearLayoutManager(this);
@@ -152,6 +161,11 @@ public class VedioActivity extends AppCompatActivity {
             }
         });
 
+        skipIds = new ArrayList<>();
+        skipIds.add(R.id.toolbar);
+        skipIds.add(R.id.pb_progress);
+        progressLayout.showLoading(skipIds);
+
         getDataFromServer();
     }
 
@@ -169,12 +183,20 @@ public class VedioActivity extends AppCompatActivity {
             @Override
             public void onSuccess(String result) {
                 parseData(result);//解析数据
+                vedioAdapter.notifyDataSetChanged();
             }
             @Override
             public void onError(Throwable ex, boolean isOnCallback) {
+                progressLayout.showError(ContextCompat.getDrawable(VedioActivity.this, R.drawable.ic_no_connection), "No connection", "RETRY", new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Toast.makeText(VedioActivity.this, "Reloading...", Toast.LENGTH_SHORT).show();
+                    }
+                }, skipIds);
             }
             @Override
             public void onCancelled(CancelledException cex) {
+                progressLayout.showEmpty(ContextCompat.getDrawable(VedioActivity.this, R.drawable.ic_empty), "Empty data", skipIds);
             }
             @Override
             public void onFinished() {

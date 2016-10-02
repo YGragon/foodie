@@ -5,12 +5,6 @@
     android:layout_height="match_parent"
     android:layout_margin="5dp"
     tools:context="com.dongxi.foodie.fragment.HomeFragment">
-    <ProgressBar
-        android:id="@+id/pb_progress"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:indeterminateDrawable="@drawable/custom_progress" />
     <android.support.v4.widget.SwipeRefreshLayout
         android:id="@+id/swipelayout"
         android:layout_width="match_parent"

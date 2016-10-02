@@ -8,6 +8,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,6 +21,7 @@ import com.dongxi.foodie.adapter.KnownledgeAdapter;
 import com.dongxi.foodie.bean.KnownledgeInfo;
 import com.dongxi.foodie.utils.UIUtils;
 import com.dongxi.foodie.view.DividerItemDecoration;
+import com.nguyenhoanglam.progresslayout.ProgressLayout;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -43,8 +45,10 @@ public class HealthKnowledgeFragment extends Fragment {
     List<KnownledgeInfo> knownledgeInfos = new ArrayList<KnownledgeInfo>();//声明全局的才有效果
     private KnownledgeAdapter knownledgeAdapter;
     private int lastVisibleItem;
-    private int pageSize = 30;
+    private int pageSize = 20;
     private int page = 1;
+    private List<Integer> skipIds;
+    private ProgressLayout progressLayout;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -55,6 +59,10 @@ public class HealthKnowledgeFragment extends Fragment {
         //ListView的布局设置
         swipelayout = (SwipeRefreshLayout)view.findViewById(R.id.swipelayout);
         recyclerView_Knownledge = (RecyclerView) view.findViewById(R.id.recyclerView_Knownledge);
+
+        Toolbar toolbar = (Toolbar)view.findViewById(R.id.toolbar);
+        toolbar.setTitle("健康知识");
+        progressLayout = (ProgressLayout) view.findViewById(R.id.progressLayout);
         pb_progress = (ProgressBar)view.findViewById(R.id.pb_progress);
 
 
@@ -148,6 +156,12 @@ public class HealthKnowledgeFragment extends Fragment {
                 lastVisibleItem = linearLayoutManager.findLastVisibleItemPosition();
             }
         });
+
+        skipIds = new ArrayList<>();
+        skipIds.add(R.id.toolbar);
+        skipIds.add(R.id.pb_progress);
+        progressLayout.showLoading(skipIds);
+
         getDataFromServer() ;
 
 
@@ -166,6 +180,7 @@ public class HealthKnowledgeFragment extends Fragment {
             @Override
             public void onSuccess(String result) {
                 parseData(result);//解析数据
+                knownledgeAdapter.notifyDataSetChanged();
             }
             @Override
             public void onError(Throwable ex, boolean isOnCallback) {
@@ -175,7 +190,7 @@ public class HealthKnowledgeFragment extends Fragment {
             }
             @Override
             public void onFinished() {
-                pb_progress.setVisibility(View.GONE);
+                progressLayout.setVisibility(View.GONE);
                 swipelayout.setVisibility(View.VISIBLE);
             }
         });

@@ -4,18 +4,23 @@ import android.graphics.Rect;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.design.widget.Snackbar;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.View;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import com.dongxi.foodie.R;
 import com.dongxi.foodie.adapter.BeautyAdapter;
+import com.dongxi.foodie.adapter.VedioAdapter;
 import com.dongxi.foodie.bean.Beauty;
+import com.nguyenhoanglam.progresslayout.ProgressLayout;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -26,6 +31,7 @@ import org.xutils.x;
 
 import java.util.ArrayList;
 import java.util.List;
+
 public class BeautyActivity extends AppCompatActivity {
 
     private List<Beauty> beautyList = new ArrayList<Beauty>();
@@ -37,8 +43,10 @@ public class BeautyActivity extends AppCompatActivity {
     private StaggeredGridLayoutManager staggeredGridLayoutManager;
     private ProgressBar pb_progress;
     private int lastVisibleItem;
-    private int pageSize = 30;
+    private int pageSize = 10;
     private int page = 1;
+    private List<Integer> skipIds;
+    private ProgressLayout progressLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,6 +55,10 @@ public class BeautyActivity extends AppCompatActivity {
 
         recyclerView= (RecyclerView) findViewById(R.id.recycler);
         swipeLayout = (SwipeRefreshLayout) findViewById(R.id.swipeLayout);
+
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar.setTitle("一大波妹子即将来袭...");
+        progressLayout = (ProgressLayout) findViewById(R.id.progressLayout);
         pb_progress = (ProgressBar) findViewById(R.id.pb_progress);
         //设置layoutManager
         //设置瀑布流
@@ -116,6 +128,24 @@ public class BeautyActivity extends AppCompatActivity {
                 lastVisibleItem = getLastVisiblePosition();
             }
         });
+        adapter.setOnItemClickListener(new VedioAdapter.OnRecyclerViewItemClickListener() {
+            @Override
+            public void onItemClick(View view, int position) {
+                Toast.makeText(BeautyActivity.this,"点我看大图哦",Toast.LENGTH_LONG).show();
+            }
+
+            @Override
+            public void onItemLongClick(View view, int position) {
+                Toast.makeText(BeautyActivity.this,"长摁收藏哦",Toast.LENGTH_LONG).show();
+            }
+        });
+
+
+
+        skipIds = new ArrayList<>();
+        skipIds.add(R.id.toolbar);
+        skipIds.add(R.id.pb_progress);
+        progressLayout.showLoading(skipIds);
 
         getDataFromServer();//从服务器获取数据
     }
@@ -184,16 +214,24 @@ public class BeautyActivity extends AppCompatActivity {
             public void onSuccess(String result) {
                 Log.d("BeautyActivity",result);//有结果
                 parseData(result);//解析数据
+                adapter.notifyDataSetChanged();
             }
             @Override
             public void onError(Throwable ex, boolean isOnCallback) {
+                progressLayout.showError(ContextCompat.getDrawable(BeautyActivity.this, R.drawable.ic_no_connection), "No connection", "RETRY", new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Toast.makeText(BeautyActivity.this, "Reloading...", Toast.LENGTH_SHORT).show();
+                    }
+                }, skipIds);
             }
             @Override
             public void onCancelled(CancelledException cex) {
+                progressLayout.showEmpty(ContextCompat.getDrawable(BeautyActivity.this, R.drawable.ic_empty), "Empty data", skipIds);
             }
             @Override
             public void onFinished() {
-                pb_progress.setVisibility(View.GONE);
+                progressLayout.setVisibility(View.GONE);
                 swipeLayout.setVisibility(View.VISIBLE);
             }
         });

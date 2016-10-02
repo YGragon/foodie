@@ -32,7 +32,7 @@ public class SettingActivity extends AppCompatActivity {
                 }
             }
         });
-        //关于我们按钮的监听器
+        //关于作者按钮的监听器
         TextView about = (TextView)findViewById(R.id.tv_about);
         about.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -89,7 +89,7 @@ public class SettingActivity extends AppCompatActivity {
         findViewById(R.id.tv_exit).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               startActivity(new Intent(SettingActivity.this,LoginActivity.class));
+                System.exit(0);
             }
         });
 
