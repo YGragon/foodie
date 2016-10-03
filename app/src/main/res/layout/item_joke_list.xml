@@ -5,28 +5,20 @@
     >
 
     <TextView
-        android:id="@+id/tv_author"
+        android:id="@+id/tv_data"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:padding="10dp"
-        android:text="作者"
+        android:text="日期："
+        android:textColor="@color/base_red"
         android:textSize="18sp"
         />
-    <ImageView
-        android:id="@+id/iv_joke"
-        android:layout_width="match_parent"
-        android:layout_height="650dp"
-        android:layout_margin="2dp"
-        android:scaleType="fitXY"
-        android:layout_below="@id/tv_author"
-        android:src="@drawable/aller"
 
-        />
     <TextView
         android:id="@+id/tv_content"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/iv_joke"
+        android:layout_below="@id/tv_data"
         android:padding="10dp"
         android:lineSpacingExtra="5dp"
         android:text="小明的传说小明的传说小明的传说小明的传说小明的传说小明的传说"

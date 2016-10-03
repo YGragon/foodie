@@ -23,14 +23,6 @@
         app:loadingProgressBarColor="@color/teal"
         app:loadingProgressBarRadius="200dp"
         app:loadingProgressBarSpinWidth="10dp">
-
-        <android.support.v7.widget.Toolbar
-            android:id="@+id/toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:layout_alignParentTop="true"
-            android:background="@color/colorPrimary"
-            app:theme="@style/CustomToolbarTheme" />
         <ProgressBar
             android:id="@+id/pb_progress"
             android:layout_width="match_parent"

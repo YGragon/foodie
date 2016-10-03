@@ -1,6 +1,7 @@
 package com.dongxi.foodie.adapter;
 
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -94,6 +95,7 @@ public class FoodAdapter extends RecyclerView.Adapter<FoodAdapter.FoodView> {
             if(holder instanceof FoodView) {
                 //这里加载数据的时候要注意，是从position-1开始，因为position==0已经被header占用了
                 foodInfo = foodList.get(position-1) ;
+                Log.e("..........",foodInfo.toString()) ;
                 holder.tv_name.setText(foodInfo.getName());// 设置美食的名字
                 holder.tv_count.setText("收藏数：" + foodInfo.getCount() + " 次");
                 String iconUrl = "http://tnfs.tngou.net/img" + foodInfo.getImg();

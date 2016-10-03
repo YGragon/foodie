@@ -3,7 +3,6 @@ package com.dongxi.foodie.fragment;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
@@ -20,6 +19,7 @@ import com.dongxi.foodie.adapter.QuestionAdapter;
 import com.dongxi.foodie.bean.QuestionInfo;
 import com.dongxi.foodie.utils.UIUtils;
 import com.dongxi.foodie.view.DividerItemDecoration;
+import com.nguyenhoanglam.progresslayout.ProgressLayout;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -42,8 +42,10 @@ public class HealthQuestionFragment extends Fragment {
     List<QuestionInfo> questionInfos = new ArrayList<QuestionInfo>();//声明全局的才有效果
     private QuestionAdapter questionAdapter;
     private int lastVisibleItem;
-    private int pageSize = 30;
+    private int pageSize = 20;
     private int page = 1;
+    private List<Integer> skipIds;
+    private ProgressLayout progressLayout;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -54,6 +56,8 @@ public class HealthQuestionFragment extends Fragment {
         //ListView的布局设置
         swipelayout = (SwipeRefreshLayout)view.findViewById(R.id.swipelayout);
         recyclerView_Question = (RecyclerView) view.findViewById(R.id.recyclerView_Question);
+
+        progressLayout = (ProgressLayout) view.findViewById(R.id.progressLayout);
         pb_progress = (ProgressBar)view.findViewById(R.id.pb_progress);
 
 
@@ -114,7 +118,6 @@ public class HealthQuestionFragment extends Fragment {
                         page++;
                         swipelayout.setRefreshing(false);
                         questionAdapter.notifyDataSetChanged();
-                        Snackbar.make(swipelayout,"刷新成功",Snackbar.LENGTH_LONG).show();
                     }
                 }, 2000);
             }
@@ -138,7 +141,6 @@ public class HealthQuestionFragment extends Fragment {
                             getDataFromServer();
                             swipelayout.setRefreshing(false);
                             questionAdapter.notifyDataSetChanged();
-                            Snackbar.make(swipelayout,"刷新成功",Snackbar.LENGTH_LONG).show();
                         }
                     }, 2000);
                 }
@@ -149,9 +151,12 @@ public class HealthQuestionFragment extends Fragment {
                 lastVisibleItem = linearLayoutManager.findLastVisibleItemPosition();
             }
         });
+
+        skipIds = new ArrayList<>();
+        skipIds.add(R.id.pb_progress);
+        progressLayout.showLoading(skipIds);
+
         getDataFromServer() ;
-
-
         return view ;
     }
     /**
@@ -177,7 +182,7 @@ public class HealthQuestionFragment extends Fragment {
             }
             @Override
             public void onFinished() {
-                pb_progress.setVisibility(View.GONE);
+                progressLayout.setVisibility(View.GONE);
                 swipelayout.setVisibility(View.VISIBLE);
             }
         });

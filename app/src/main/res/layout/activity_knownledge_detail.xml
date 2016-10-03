@@ -16,6 +16,7 @@
                 android:id="@+id/iv_knownledge_image"
                 android:layout_width="match_parent"
                 android:layout_height="330dp"
+                android:scaleType="centerCrop"
                 android:src="@mipmap/logo"/>
             <TextView
                 android:id="@+id/tv_knownledge_mater"
@@ -25,7 +26,7 @@
                 android:layout_margin="5dp"
                 android:text="健康知识概述："
                 android:textColor="@color/colorAccent"
-                android:textSize="20sp"/>
+                android:textSize="25sp"/>
             <TextView
                 android:id="@+id/tv_knownledge_material"
                 android:layout_width="wrap_content"

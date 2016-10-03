@@ -17,6 +17,7 @@
                 android:id="@+id/iv_question_image"
                 android:layout_width="match_parent"
                 android:layout_height="330dp"
+                android:scaleType="centerCrop"
                 android:src="@mipmap/logo"/>
             <TextView
                 android:id="@+id/tv_question_title"
@@ -28,7 +29,7 @@
                 android:textColor="@color/colorAccent"
                 android:maxLines="3"
                 android:ellipsize="end"
-                android:textSize="40sp"/>
+                android:textSize="25sp"/>
 
             <TextView
                 android:id="@+id/tv_question_description"
@@ -38,7 +39,7 @@
                 android:layout_margin="5dp"
                 android:lineSpacingExtra="5dp"
                 android:text="健康知识描述："
-                android:textSize="25sp"/>
+                android:textSize="20sp"/>
 
         </RelativeLayout>
     </ScrollView>

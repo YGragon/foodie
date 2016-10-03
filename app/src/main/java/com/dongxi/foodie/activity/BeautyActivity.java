@@ -91,6 +91,7 @@ public class BeautyActivity extends AppCompatActivity {
                 new Handler().postDelayed(new Runnable() {
                     @Override
                     public void run() {
+                        page++ ;
                         swipeLayout.setRefreshing(false);
                         adapter.notifyDataSetChanged();
                         Snackbar.make(swipeLayout,"刷新成功",Snackbar.LENGTH_LONG).show();
@@ -108,13 +109,14 @@ public class BeautyActivity extends AppCompatActivity {
 
                 if (newState == RecyclerView.SCROLL_STATE_IDLE
                         && lastVisibleItem + 1 == adapter.getItemCount()) {
-                    swipeLayout.setRefreshing(true);
+//                    swipeLayout.setRefreshing(true);
                     // 此处在现实项目中，请换成网络请求数据代码，sendRequest .....
-                    getDataFromServer();
+
                     new Handler().postDelayed(new Runnable() {
                         @Override
                         public void run() {
                             page++;
+                            getDataFromServer();
                             swipeLayout.setRefreshing(false);
                             adapter.notifyDataSetChanged();
                             Snackbar.make(swipeLayout,"刷新成功",Snackbar.LENGTH_LONG).show();

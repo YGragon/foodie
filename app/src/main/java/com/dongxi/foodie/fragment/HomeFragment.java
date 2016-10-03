@@ -13,7 +13,6 @@ import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
@@ -41,16 +40,15 @@ import java.util.List;
 
 public class HomeFragment extends Fragment {
 
-//    private Food food;
     private Food info;
 
     private SwipeRefreshLayout swipelayout ;
-    private Button btn_convenience;
 
     private RecyclerView lv_food_list;
     private ProgressBar pb_progress;
     private LinearLayoutManager linearLayoutManager;
     List<Food> foodInfos = new ArrayList<Food>();//声明全局的才有效果
+    List<Food> foodLists = new ArrayList<Food>();//声明全局的才有效果
     private FoodAdapter foodAdapter;
     private int lastVisibleItem;
     private int pageSize = 30;
@@ -58,6 +56,9 @@ public class HomeFragment extends Fragment {
     private RollPagerView loop_view_pager;
     private BannerLoopPager bannerLoopPager ;
     private View header;
+    private String img;
+    private String name;
+    private String count;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -127,11 +128,9 @@ public class HomeFragment extends Fragment {
                 new Handler().postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        foodInfos.add(0, info);//在头部加入数据
-                        page++;
+                        foodInfos.add(0,info) ;//在头部加入数据
                         foodAdapter.notifyDataSetChanged();
-                        swipelayout.setRefreshing(false);//刷新
-                        Snackbar.make(swipelayout,"刷新成功",Snackbar.LENGTH_LONG).show();
+                        swipelayout.setRefreshing(false);// 通知RecyclerView刷新数据完毕,让listview停止刷新
                     }
                 }, 2000);
             }
@@ -231,14 +230,15 @@ public class HomeFragment extends Fragment {
             for(int i=0;i<jsonArray.length();i++){
                 JSONObject jsonObj = jsonArray.getJSONObject(i);
                 int id=jsonObj.getInt("id");
-                String name = jsonObj.getString("name");//菜名
-                String img=jsonObj.getString("img");
-                String count = jsonObj.getString("count");
+                //菜名
+                name = jsonObj.getString("name");
+                img = jsonObj.getString("img");
+                count = jsonObj.getString("count");
                 String description = jsonObj.getString("description");
                 String food = jsonObj.getString("food");//食材
 
 
-                info = new Food(id, name,img,count,description,food);
+                info = new Food(id, name, img, count,description,food);
                 foodInfos.add(info);
             }
             return foodInfos;

@@ -8,7 +8,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -60,8 +59,6 @@ public class HealthKnowledgeFragment extends Fragment {
         swipelayout = (SwipeRefreshLayout)view.findViewById(R.id.swipelayout);
         recyclerView_Knownledge = (RecyclerView) view.findViewById(R.id.recyclerView_Knownledge);
 
-        Toolbar toolbar = (Toolbar)view.findViewById(R.id.toolbar);
-        toolbar.setTitle("健康知识");
         progressLayout = (ProgressLayout) view.findViewById(R.id.progressLayout);
         pb_progress = (ProgressBar)view.findViewById(R.id.pb_progress);
 
@@ -158,7 +155,6 @@ public class HealthKnowledgeFragment extends Fragment {
         });
 
         skipIds = new ArrayList<>();
-        skipIds.add(R.id.toolbar);
         skipIds.add(R.id.pb_progress);
         progressLayout.showLoading(skipIds);
 

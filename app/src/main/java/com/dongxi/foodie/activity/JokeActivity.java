@@ -8,7 +8,6 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
 import android.util.TypedValue;
 import android.view.View;
 import android.widget.ProgressBar;
@@ -30,6 +29,8 @@ import org.xutils.x;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.dongxi.foodie.R.id.swipe_layout;
+
 public class JokeActivity extends AppCompatActivity {
 
     private RecyclerView lv_joke;
@@ -42,7 +43,7 @@ public class JokeActivity extends AppCompatActivity {
     private LinearLayoutManager linearLayoutManager;
     private int lastVisibleItem;
     private int pageSize = 10;
-    private int page = 0;
+    private int page = 1;
     private List<Integer> skipIds;
     private ProgressLayout progressLayout;
 
@@ -51,22 +52,16 @@ public class JokeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_joke);
 
-        swipelayout = (SwipeRefreshLayout) findViewById(R.id.swipe_layout);
+        swipelayout = (SwipeRefreshLayout) findViewById(swipe_layout);
         lv_joke = (RecyclerView) findViewById(R.id.lv_joke);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        toolbar.setTitle("看个段子");
+
         progressLayout = (ProgressLayout) findViewById(R.id.progressLayout);
         pb_progress = (ProgressBar) findViewById(R.id.pb_progress);
-
-
 
         linearLayoutManager = new LinearLayoutManager(this);
         lv_joke.setLayoutManager(linearLayoutManager);
         //设置adapter
         jokeAdapter = new JokeAdapter(jokeInfos);
-        if (jokeAdapter==null){
-            progressLayout.showEmpty(ContextCompat.getDrawable(JokeActivity.this, R.drawable.ic_empty), "Empty data",skipIds);
-        }
         lv_joke.setAdapter(jokeAdapter);
 
         //配置RecyclerView 可以提高执行效率, 前提你要知道有多少不变的item
@@ -102,11 +97,12 @@ public class JokeActivity extends AppCompatActivity {
                         && lastVisibleItem + 1 == jokeAdapter.getItemCount()) {
                     swipelayout.setRefreshing(true);
                     // 此处在现实项目中，请换成网络请求数据代码，sendRequest .....
-                    getDataFromServer();
+
                     new Handler().postDelayed(new Runnable() {
                         @Override
                         public void run() {
                             page++;
+                            getDataFromServer();
                             swipelayout.setRefreshing(false);
                             jokeAdapter.notifyDataSetChanged();
                             Snackbar.make(swipelayout,"刷新成功",Snackbar.LENGTH_LONG).show();
@@ -130,7 +126,6 @@ public class JokeActivity extends AppCompatActivity {
                         page++;
                         swipelayout.setRefreshing(false);
                         jokeAdapter.notifyDataSetChanged();
-                        Snackbar.make(swipelayout,"刷新成功",Snackbar.LENGTH_LONG).show();
                     }
                 }, 2000);
             }
@@ -138,10 +133,8 @@ public class JokeActivity extends AppCompatActivity {
 
 
         skipIds = new ArrayList<>();
-        skipIds.add(R.id.toolbar);
         skipIds.add(R.id.pb_progress);
         progressLayout.showLoading(skipIds);
-
         getDataFromServer();
 
     }
@@ -152,8 +145,9 @@ public class JokeActivity extends AppCompatActivity {
     private void getDataFromServer() {
 
         pb_progress.setVisibility(View.VISIBLE);
-        RequestParams params = new RequestParams("http://api.1-blog.com/biz/bizserver/" +
-                "xiaohua/list.do?size="+String.valueOf(pageSize)+"&page="+ String.valueOf(page));
+        //http://japi.juhe.cn/joke/content/text.from?key=506689e288bb5d581a295ad76b3ebb6e&page=1&pagesize=10
+        RequestParams params = new RequestParams("http://japi.juhe.cn/joke/content/text.from?key=506689e288bb5d581a295ad76b3ebb6e&" +
+                "page="+String.valueOf(page)+"&pagesize="+ String.valueOf(pageSize));
         //params.setSslSocketFactory(...); // 设置ssl
         params.addQueryStringParameter("wd", "xUtils");
         x.http().get(params, new Callback.CommonCallback<String>() {
@@ -180,8 +174,8 @@ public class JokeActivity extends AppCompatActivity {
 
             @Override
             public void onFinished() {
-                pb_progress.setVisibility(View.GONE);
-                lv_joke.setVisibility(View.VISIBLE);
+                progressLayout.setVisibility(View.GONE);
+                swipelayout.setVisibility(View.VISIBLE);
             }
         });
 
@@ -196,13 +190,13 @@ public class JokeActivity extends AppCompatActivity {
         JSONObject jsonObject = null;
         try {
             jsonObject = new JSONObject(result);
-            JSONArray jsonArray = jsonObject.getJSONArray("detail");
+            JSONObject jsonResult = jsonObject.getJSONObject("result");
+            JSONArray jsonArray = jsonResult.getJSONArray("data");
             for (int i = 0; i < jsonArray.length(); i++) {
                 JSONObject jsonObj = jsonArray.getJSONObject(i);
-                String author = jsonObj.getString("author");
-                String content = jsonObj.getString("content");
-                String picUrl = jsonObj.getString("picUrl");
-                JokeInfo info = new JokeInfo(author, content, picUrl);
+                String content = jsonObj.getString("content").replaceAll("\\s*", "");//去除内容中的空格
+                String updatetime = jsonObj.getString("updatetime");
+                JokeInfo info = new JokeInfo(content, updatetime);
                 jokeInfos.add(info);
             }
         } catch (JSONException e) {

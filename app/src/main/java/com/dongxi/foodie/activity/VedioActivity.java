@@ -107,11 +107,12 @@ public class VedioActivity extends AppCompatActivity {
                         && lastVisibleItem + 1 == vedioAdapter.getItemCount()) {
                     swipelayout.setRefreshing(true);
                     // 此处在现实项目中，请换成网络请求数据代码，sendRequest .....
-                    getDataFromServer();
+
                     new Handler().postDelayed(new Runnable() {
                         @Override
                         public void run() {
                             page++;
+                            getDataFromServer();
                             Toast.makeText(VedioActivity.this,"加载更多:page = " + page,Toast.LENGTH_LONG).show();
                             swipelayout.setRefreshing(false);
                             vedioAdapter.notifyDataSetChanged();

@@ -6,27 +6,17 @@ package com.dongxi.foodie.bean;
 public class JokeInfo {
 
     /**
-     * author : aller
+     *
      * content : 那次在街上...
-     * picUrl :
+     * updatetime : 时间
      */
 
-    private String author;
     private String content;
-    private String picUrl;
+    private String updatetime;
 
-    public JokeInfo(String author, String content, String picUrl) {
-        this.author = author;
+    public JokeInfo(String content, String updatetime) {
         this.content = content;
-        this.picUrl = picUrl;
-    }
-
-    public String getAuthor() {
-        return author;
-    }
-
-    public void setAuthor(String author) {
-        this.author = author;
+        this.updatetime = updatetime;
     }
 
     public String getContent() {
@@ -37,20 +27,19 @@ public class JokeInfo {
         this.content = content;
     }
 
-    public String getPicUrl() {
-        return picUrl;
+    public String getUpdatetime() {
+        return updatetime;
     }
 
-    public void setPicUrl(String picUrl) {
-        this.picUrl = picUrl;
+    public void setUpdatetime(String updatetime) {
+        this.updatetime = updatetime;
     }
 
     @Override
     public String toString() {
         return "JokeInfo{" +
-                "author='" + author + '\'' +
-                ", content='" + content + '\'' +
-                ", picUrl='" + picUrl + '\'' +
+                "content='" + content + '\'' +
+                ", updatetime='" + updatetime + '\'' +
                 '}';
     }
 }
