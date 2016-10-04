@@ -6,22 +6,13 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import com.dongxi.foodie.R;
 import com.dongxi.foodie.activity.CommonScanActivity;
 import com.dongxi.foodie.activity.ShakeActivity;
-import com.dongxi.foodie.controller.LocationCode;
-import com.dongxi.foodie.controller.PoiAroundSearchActivity;
 import com.dongxi.foodie.controller.VipControllerActivity;
 
-import java.util.HashMap;
-import java.util.Map;
-
 public class FindFragment extends Fragment {
-    TextView locate ;
-    String location = "正在定位中...";
-    public static Map<String,String> locmap = new HashMap<String,String>();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -38,23 +29,6 @@ public class FindFragment extends Fragment {
             }
         });
 
-        //附近搜索
-        findView.findViewById(R.id.poi).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent i = new Intent(getActivity(),PoiAroundSearchActivity.class);
-                startActivity(i);
-            }
-        });
-
-        //更多周边
-        findView.findViewById(R.id.findMap).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent i = new Intent(getActivity(),MapFragment.class);
-                startActivity(i);
-            }
-        });
 
         //摇一摇
         findView.findViewById(R.id.tv_shake).setOnClickListener(new View.OnClickListener() {
@@ -74,21 +48,6 @@ public class FindFragment extends Fragment {
             }
         });
 
-
-        locate = (TextView) findView.findViewById(R.id.locate_tv);
-
-        locate.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent i = new Intent(getActivity(),LocationCode.class);
-                getActivity().startService(i);
-                locate.setText(location);
-                location = locmap.get("city") + locmap.get("district")
-                        + locmap.get("street") + locmap.get("streetNum");
-                locate.setText(location);
-
-            }
-        });
         return findView;
     }
 

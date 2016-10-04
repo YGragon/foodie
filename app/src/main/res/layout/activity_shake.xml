@@ -4,31 +4,161 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.edg.foodie.activity.ShakeActivity"
-    android:background="#1f1f1f"
+    android:background="@color/shake_bg"
+    android:gravity="center"
+    android:orientation="vertical"
     >
-
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/shakehideimg_man2"/>
+    <!-- 手掌展开后里面的图片 -->
 
     <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:orientation="vertical">
+        android:layout_width="match_parent"
+        android:layout_height="260dp"
+        android:background="@color/shake_flower_bg"
+        android:gravity="center"
+        android:orientation="vertical" >
 
         <ImageView
-            android:id="@+id/up"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/shake_logo_up"/>
-
-        <ImageView
-            android:id="@+id/down"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/shake_logo_down"/>
+            android:id="@+id/shake_flower"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:src="@drawable/shake_flower_img" />
     </LinearLayout>
 
+    <LinearLayout
+        android:id="@+id/shake_loading"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/shakeImgDown"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <ProgressBar
+            android:layout_width="18dp"
+            android:layout_height="18dp"
+            android:indeterminateDuration="1100"
+            android:indeterminateDrawable="@drawable/progressbar_shake_loading"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="正在搜寻美好"
+            android:textSize="16dp"
+            android:singleLine="true"
+            android:ellipsize="end"
+            android:layout_marginLeft="6dp"
+            android:textColor="@color/white" />
+
+    </LinearLayout>
+
+    <!-- 摇一摇的结果 -->
+    <RelativeLayout
+        android:id="@+id/shake_result_layout"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:layout_below="@+id/shakeImgDown"
+        android:layout_marginLeft="40dp"
+        android:layout_marginRight="40dp"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/shake_result_bg"
+        android:gravity="center_vertical"
+        android:visibility="visible"
+        android:padding="@dimen/listitem_top" >
+
+        <ImageView
+            android:id="@+id/shake_result_img"
+            android:layout_width="56dp"
+            android:layout_height="56dp"
+            android:layout_centerVertical="true"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="@dimen/layout_padding"
+            android:layout_toRightOf="@id/shake_result_img"
+            android:gravity="center_vertical"
+            android:orientation="vertical" >
+
+            <TextView
+                android:id="@+id/shake_result_txt_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="top"
+                android:gravity="center_vertical"
+                android:textSize="16dp"
+                android:textColor="@color/shake_reslut_txt_color" />
+
+            <TextView
+                android:id="@+id/shake_result_txt_value"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="top"
+                android:gravity="center_vertical"
+                android:textColor="@color/shake_reslut_txt_color"
+                android:textSize="16dp" />
+
+        </LinearLayout>
+    </RelativeLayout>
+
+
+    <!-- 手掌页面 -->
+    <RelativeLayout
+        android:id="@+id/shakeImgUp"
+        android:layout_width="match_parent"
+        android:layout_height="130dp"
+        android:background="@color/shake_bg" >
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:src="@drawable/shake_logo_up" />
+
+        <LinearLayout
+            android:id="@+id/shakeImgUp_line"
+            android:layout_width="match_parent"
+            android:layout_height="4dp"
+            android:layout_alignParentBottom="true"
+            android:background="@color/black"
+            android:visibility="gone" >
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="3dp"
+                android:layout_gravity="bottom"
+                android:background="@color/shake_line_bg" />
+        </LinearLayout>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/shakeImgDown"
+        android:layout_width="match_parent"
+        android:layout_height="130dp"
+        android:layout_below="@id/shakeImgUp"
+        android:background="@color/shake_bg" >
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:src="@drawable/shake_logo_down" />
+
+        <LinearLayout
+            android:id="@+id/shakeImgDown_line"
+            android:layout_width="match_parent"
+            android:layout_height="4dp"
+            android:layout_alignParentTop="true"
+            android:background="@color/black"
+            android:visibility="gone" >
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="3dp"
+                android:layout_gravity="top"
+                android:background="@color/shake_line_bg" />
+        </LinearLayout>
+    </RelativeLayout>
 </RelativeLayout>

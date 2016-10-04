@@ -23,13 +23,4 @@
             android:icon="@drawable/ic_menu_manage"
             android:title="系统设置" />
     </group>
-
-    <item android:title="Communicate">
-        <menu>
-            <item
-                android:id="@+id/nav_share"
-                android:icon="@drawable/ic_menu_share"
-                android:title="分享" />
-        </menu>
-    </item>
 </menu>

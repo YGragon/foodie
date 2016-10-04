@@ -14,42 +14,6 @@
             android:id="@+id/ll"
             android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/locate_tv"
-                android:layout_marginTop="@dimen/margin_top"
-                android:paddingLeft="15dp"
-                android:gravity="center_vertical"
-                android:text="开始定位"
-                android:textSize="25dp"
-                android:drawableLeft="@drawable/icon_gcoding"
-                android:drawablePadding="7dp"
-                android:background="#FFFFFF"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-
-            <TextView
-                android:layout_marginTop="@dimen/margin_top"
-                android:layout_below="@id/locate_tv"
-                android:id="@+id/poi"
-                android:paddingLeft="15dp"
-                android:text="附近搜索"
-                android:textSize="25dp"
-                android:drawableLeft="@drawable/icon_explore_samecity"
-                android:drawablePadding="7dp"
-                android:background="#FFFFFF"
-                android:gravity="center_vertical"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-
-            <View
-                android:id="@+id/item_divider"
-                android:layout_width="match_parent"
-                android:layout_height="0.1dp"
-                android:layout_marginTop="10dp"
-                android:layout_below="@id/poi"
-                android:layout_marginLeft="8dp"
-                android:layout_marginRight="8dp"
-                android:background="@color/text_gray" />
 
             <RelativeLayout
                 android:background="#FFFFFF"
@@ -77,29 +41,6 @@
             </RelativeLayout>
 
         </LinearLayout>
-        <TextView
-            android:layout_marginTop="@dimen/margin_top"
-            android:layout_below="@id/ll"
-            android:id="@+id/findMap"
-            android:paddingLeft="15dp"
-            android:text="更多周边"
-            android:textSize="25dp"
-            android:drawableLeft="@drawable/icon_explore_friends"
-            android:drawablePadding="7dp"
-            android:background="#FFFFFF"
-            android:gravity="center_vertical"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-
-        <View
-            android:id="@+id/item_divider2"
-            android:layout_width="match_parent"
-            android:layout_height="0.1dp"
-            android:layout_marginTop="10dp"
-            android:layout_below="@id/findMap"
-            android:layout_marginLeft="8dp"
-            android:layout_marginRight="8dp"
-            android:background="@color/text_gray" />
 
        <TextView
            android:id="@+id/tv_shake"
@@ -107,7 +48,7 @@
            android:layout_height="wrap_content"
            android:paddingLeft="15dp"
            android:layout_marginTop="@dimen/margin_top"
-           android:layout_below="@id/findMap"
+           android:layout_below="@id/ll"
            android:drawableLeft="@drawable/icon_explore_shake"
            android:drawablePadding="7dp"
            android:text="摇一摇"

@@ -47,5 +47,12 @@
     <color name="default_line_color">#e6e6e6</color>
 
     <color name="scan_bg">#7f000000</color>
+    <!--摇一摇-->
+    <color name="shake_bg">#292c2d</color>
+    <color name="shake_flower_bg">#282e2c</color>
+    <color name="shake_line_bg">#46494f</color>
+    <color name="shake_reslut_bg">#393b3c</color>
+    <color name="shake_reslut_ling_bg">#4d4f50</color>
+    <color name="shake_reslut_txt_color">#a1a1a1</color>
 
 </resources>

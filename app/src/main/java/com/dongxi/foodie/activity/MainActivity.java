@@ -26,8 +26,6 @@ import com.dongxi.foodie.fragment.HomeFragment;
 import com.dongxi.foodie.fragment.CommunityFragment;
 import com.jaeger.library.StatusBarUtil;
 
-import cn.sharesdk.framework.ShareSDK;
-import cn.sharesdk.onekeyshare.OnekeyShare;
 
 public class MainActivity extends ActionBarActivity implements View.OnClickListener,NavigationView.OnNavigationItemSelectedListener{
 
@@ -203,32 +201,9 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
         } else if (id == R.id.nav_setting) {
             // 点击侧边栏第一项打开系统设置
             startActivity(new Intent(MainActivity.this,SettingActivity.class));
-        } else if (id == R.id.nav_share) {
-            // 点击侧边栏第一项打开分享
-            showShare() ;
-
         }
         mDrawerLayout.closeDrawer(GravityCompat.START);
         return true;
-    }
-
-    //分享
-    private void showShare() {
-        ShareSDK.initSDK(this);
-        OnekeyShare oks = new OnekeyShare();
-        //关闭sso授权
-        oks.disableSSOWhenAuthorize();
-
-        oks.setTitle("吃货宝App");
-        oks.setTitleUrl("http://dongxi520.com/");
-        oks.setText("测试分享功能");
-        oks.setUrl("http://dongxi520.com/");
-        oks.setComment("我是测试评论文本");
-        oks.setSite(getString(R.string.app_name));
-        oks.setSiteUrl("http://dongxi520.com/");
-
-        // 启动分享GUI
-        oks.show(this);
     }
 
     /**

@@ -25,6 +25,12 @@
         <item name="android:gravity">center</item>
         <item name="android:textSize">22sp</item>
     </style>
+    //Dialog全屏显示图片
+    <style name="Dialog_Fullscreen">
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowFullscreen">true</item>
+        <item name="android:windowIsTranslucent">true</item>
+    </style>
     //进度条样式
     <style name="CustomToolbarTheme" parent="Base.ThemeOverlay.AppCompat.ActionBar">
         <item name="android:background">@color/colorPrimary</item>

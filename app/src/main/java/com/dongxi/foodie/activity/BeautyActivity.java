@@ -1,5 +1,6 @@
 package com.dongxi.foodie.activity;
 
+import android.app.Dialog;
 import android.graphics.Rect;
 import android.os.Bundle;
 import android.os.Handler;
@@ -12,7 +13,9 @@ import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.util.TypedValue;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
@@ -110,8 +113,6 @@ public class BeautyActivity extends AppCompatActivity {
                 if (newState == RecyclerView.SCROLL_STATE_IDLE
                         && lastVisibleItem + 1 == adapter.getItemCount()) {
 //                    swipeLayout.setRefreshing(true);
-                    // 此处在现实项目中，请换成网络请求数据代码，sendRequest .....
-
                     new Handler().postDelayed(new Runnable() {
                         @Override
                         public void run() {
@@ -133,16 +134,27 @@ public class BeautyActivity extends AppCompatActivity {
         adapter.setOnItemClickListener(new VedioAdapter.OnRecyclerViewItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
-                Toast.makeText(BeautyActivity.this,"点我看大图哦",Toast.LENGTH_LONG).show();
+                LayoutInflater inflater = LayoutInflater.from(BeautyActivity.this);
+                View imgEntryView = inflater.inflate(R.layout.dialog_fullscreen, null); // 加载自定义的布局文件
+                final Dialog dialog = new Dialog(BeautyActivity.this,R.style.Dialog_Fullscreen);
+                ImageView img1 = (ImageView)imgEntryView.findViewById(R.id.iv_fullImage);
+                x.image().bind(img1,beautyList.get(position).getUrl());
+                dialog.setContentView(imgEntryView); // 自定义dialog
+                dialog.show();
+
+                // 点击布局文件（也可以理解为点击大图）后关闭dialog，这里的dialog不需要按钮
+                imgEntryView.setOnClickListener(new View.OnClickListener() {
+                    public void onClick(View paramView) {
+                        dialog.cancel();
+                    }
+                });
             }
 
+            //长摁事件
             @Override
             public void onItemLongClick(View view, int position) {
-                Toast.makeText(BeautyActivity.this,"长摁收藏哦",Toast.LENGTH_LONG).show();
             }
         });
-
-
 
         skipIds = new ArrayList<>();
         skipIds.add(R.id.toolbar);
