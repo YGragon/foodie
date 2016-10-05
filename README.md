@@ -5,17 +5,16 @@
 厨神菜谱APP，不仅仅是一个介绍菜谱的APP，他是一个集健康菜谱，健康资讯，健康问答为主体，同时又具有播放视频功能，播放音乐功能，图片浏览功能，段子查看的功能。让你能够在成为健康厨神的路上不缺乏乐趣！
 
 ## 目前实现的功能展示
-- 菜谱
-- ![菜谱](images/home.png)
-- ![描述](images/food_detail.png)
-- 社区
+- **菜谱、详情**
+- ![菜谱](images/home.png) ![描述](images/food_detail.png)
+
+- **社区**
 - ![社区](images/Community.png)
-- 娱乐功能
-- ![娱乐功能](images/meitu.png)
-- ![娱乐功能](images/yinyue.png)
-- ![娱乐功能](images/duanzi.png)
-- ![娱乐功能](images/shipin.png)
-- 部分小功能
+
+- **娱乐功能**
+- ![meitu](images/meitu.png) ![yinyue](images/yinyue.png) ![duanzi](images/duanzi.png) ![shipin](images/shipin.png)
+
+- **部分小功能**
 - ![search](images/search.png)
 - ![scan](images/scan.png)
 
