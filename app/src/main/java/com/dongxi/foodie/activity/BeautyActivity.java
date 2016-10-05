@@ -120,7 +120,6 @@ public class BeautyActivity extends AppCompatActivity {
                             getDataFromServer();
                             swipeLayout.setRefreshing(false);
                             adapter.notifyDataSetChanged();
-                            Snackbar.make(swipeLayout,"刷新成功",Snackbar.LENGTH_LONG).show();
                         }
                     }, 2000);
                 }
@@ -214,13 +213,13 @@ public class BeautyActivity extends AppCompatActivity {
 
     /**
      * 从服务器获取数据
+     * http://gank.io/api/data/%E7%A6%8F%E5%88%A9/10/1
+     *
      */
     private void getDataFromServer() {
         pb_progress.setVisibility(View.VISIBLE);
         //数据来自干活集中营
-        RequestParams params = new RequestParams("http://gank.io/api/search/query/listview/" +
-                "category/%E7%A6%8F%E5%88%A9/count/" +
-                String.valueOf(pageSize)+"/page" + "/" +String.valueOf(page));
+        RequestParams params = new RequestParams("http://gank.io/api/data/%E7%A6%8F%E5%88%A9/"+pageSize+"/"+page);
         //params.setSslSocketFactory(...); // 设置ssl
         params.addQueryStringParameter("wd", "xUtils");
         x.http().get(params,new Callback.CommonCallback<String>(){

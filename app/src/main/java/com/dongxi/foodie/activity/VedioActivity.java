@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.design.widget.Snackbar;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -113,10 +112,8 @@ public class VedioActivity extends AppCompatActivity {
                         public void run() {
                             page++;
                             getDataFromServer();
-                            Toast.makeText(VedioActivity.this,"加载更多:page = " + page,Toast.LENGTH_LONG).show();
                             swipelayout.setRefreshing(false);
                             vedioAdapter.notifyDataSetChanged();
-                            Snackbar.make(swipelayout,"刷新成功",Snackbar.LENGTH_LONG).show();
                         }
                     }, 2000);
                 }
@@ -142,7 +139,6 @@ public class VedioActivity extends AppCompatActivity {
             //item的长按事件
             @Override
             public void onItemLongClick(View view, int position) {
-                Toast.makeText(VedioActivity.this,"别长摁太久哦",Toast.LENGTH_LONG).show();
             }
         });
 
@@ -156,7 +152,6 @@ public class VedioActivity extends AppCompatActivity {
                         page++;
                         swipelayout.setRefreshing(false);
                         vedioAdapter.notifyDataSetChanged();
-                        Snackbar.make(swipelayout,"刷新成功",Snackbar.LENGTH_LONG).show();
                     }
                 }, 2000);
             }
@@ -172,12 +167,11 @@ public class VedioActivity extends AppCompatActivity {
 
     /**
      * 从服务器获取数据
+     * http://gank.io/api/data/%E4%BC%91%E6%81%AF%E8%A7%86%E9%A2%91/10/1
      */
     private void getDataFromServer() {
         pb_progress.setVisibility(View.VISIBLE);
-        RequestParams params = new RequestParams("http://gank.io/api/search/query/" +
-                "listview/category/%E4%BC%91%E6%81%AF%E8%A7%86%E9%A2%91/count/" +
-                String.valueOf(pageSize)+"/page" + "/" +String.valueOf(page));
+        RequestParams params = new RequestParams("http://gank.io/api/data/%E4%BC%91%E6%81%AF%E8%A7%86%E9%A2%91/"+pageSize+"/"+page);
         //params.setSslSocketFactory(...); // 设置ssl
         params.addQueryStringParameter("wd", "xUtils");
         x.http().get(params,new Callback.CommonCallback<String>(){
